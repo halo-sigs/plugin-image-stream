@@ -55,3 +55,15 @@ build {
 halo {
     version = "2.19.3"
 }
+
+ext {
+    unsplashAccessKey = System.getenv("UNSPLASH_ACCESS_KEY")
+    pexelsApiKey = System.getenv("PEXELS_API_KEY")
+    pixabayApiKey = System.getenv("PIXABAY_API_KEY")
+}
+
+tasks.withType(JavaCompile) {
+    options.compilerArgs << "-DunsplashAccessKey=${unsplashAccessKey}"
+    options.compilerArgs << "-DpexelsApiKey=${pexelsApiKey}"
+    options.compilerArgs << "-DpixabayApiKey=${pixabayApiKey}"
+}
