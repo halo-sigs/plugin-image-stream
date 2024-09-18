@@ -26,10 +26,10 @@ public class BasicProp {
     }
 
     public static BasicProp from(Map<String, JsonNode> config) {
-        var basic = config.get(GROUP);
-        if (basic == null) {
+        if (config == null || !config.containsKey(GROUP)) {
             return new BasicProp();
         }
+        var basic = config.get(GROUP);
         return JsonUtils.mapper().convertValue(basic, BasicProp.class);
     }
 }

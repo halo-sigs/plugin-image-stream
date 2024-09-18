@@ -52,6 +52,28 @@ build {
     }
 }
 
+tasks.register('generateApiKeysFile') {
+    def outputDir = layout.buildDirectory.dir("resources/main").get().asFile
+    def apiKeysFile = file("$outputDir/apiKeys.properties")
+
+    doLast {
+        if (!outputDir.exists()) {
+            outputDir.mkdirs()
+        }
+        apiKeysFile.withWriter('UTF-8') { writer ->
+            writer.writeLine("unsplash=${project.findProperty('unsplashApiKey') ?: ''}")
+            writer.writeLine("pexels=${project.findProperty('pexelsApiKey') ?: ''}")
+            writer.writeLine("pixabay=${project.findProperty('pixabayApiKey') ?: ''}")
+        }
+
+        println "API keys properties file generated at: $apiKeysFile"
+    }
+}
+
+tasks.named("processResources").configure {
+    dependsOn("generateApiKeysFile")
+}
+
 halo {
     version = "2.19.3"
 }
