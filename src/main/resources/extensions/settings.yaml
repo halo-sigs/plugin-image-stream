@@ -7,11 +7,30 @@ spec:
     - group: basic
       label: 基本设置
       formSchema:
-        - $formkit: password
-          help: https://unsplash.com/developers
-          label: Access Key
-          name: accessKey
-          validation: required
+        - $formkit: group
+          label: Unsplash
+          name: unsplash
+          children:
+            - $formkit: password
+              help: 插件中已经内置，如果你需要使用自己的 Access Key，可以在 https://unsplash.com/developers 申请并填写。
+              label: Access Key
+              name: accessKey
+        - $formkit: group
+          label: Pexels
+          name: pexels
+          children:
+            - $formkit: password
+              help: 插件中已经内置，如果你需要使用自己的 API Key，可以在 https://www.pexels.com/api 申请并填写。
+              label: API Key
+              name: apiKey
+        - $formkit: group
+          label: Pixabay
+          name: pixabay
+          children:
+            - $formkit: password
+              help: 插件中已经内置，如果你需要使用自己的 API Key，可以在 https://pixabay.com/zh/service/about/api 申请并填写。
+              label: API key
+              name: apiKey
         - $formkit: group
           label: 转存模式
           name: downloadMode
