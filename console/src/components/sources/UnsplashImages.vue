@@ -13,8 +13,13 @@ import DownloadButton from '../base/DownloadButton.vue'
 import DownloadModeSwitcher from '../base/DownloadModeSwitcher.vue'
 import ImageCard from '../base/ImageCard.vue'
 import ImageLayout from '../base/ImageLayout.vue'
+import axios from 'axios'
 
 const unsplash = createApi({ accessKey: import.meta.env.VITE_UNSPLASH_KEY })
+
+const unsplashApiClient = axios.create({
+  baseURL: '/apis/unsplash.halo.run/v1alpha1'
+})
 
 const props = withDefaults(
   defineProps<{
@@ -38,24 +43,25 @@ const images = ref<Photo[]>([])
 const page = ref(1)
 const keyword = ref('')
 
-const { isDownloadMode, accessKey } = useConfig()
+const { isDownloadMode } = useConfig()
 
 const { data: topics } = useQuery<Topic[] | undefined>({
-  queryKey: ['plugin:image-stream:unsplash:topics', accessKey],
+  queryKey: ['plugin:image-stream:unsplash:topics'],
   queryFn: async () => {
-    const { response } = await unsplash.topics.list({
-      page: 1,
-      perPage: 100,
-      orderBy: 'featured'
+    const { data } = await unsplashApiClient.get(`/topics`, {
+      params: {
+        page: 1,
+        per_page: 100,
+        order_by: 'featured'
+      }
     })
-    return response?.results || []
+    return data || []
   },
   onSuccess(data) {
     if (data?.length) {
       selectedTopicId.value = data[0].id
     }
-  },
-  enabled: computed(() => !!accessKey.value)
+  }
 })
 
 watch(
@@ -68,35 +74,38 @@ watch(
 )
 
 const { isFetching } = useQuery({
-  queryKey: ['plugin:image-stream:unsplash:images', keyword, selectedTopicId, page, accessKey],
+  queryKey: ['plugin:image-stream:unsplash:images', keyword, selectedTopicId, page],
   queryFn: async () => {
     if (keyword.value) {
-      const { response } = await unsplash.search.getPhotos({
-        page: page.value,
-        perPage: DEFAULT_PER_PAGE,
-        query: keyword.value
+      const { data } = await unsplashApiClient.get(`/photos/-/search`, {
+        params: {
+          page: page.value,
+          per_page: DEFAULT_PER_PAGE,
+          query: keyword.value
+        }
       })
 
-      return response?.results || []
+      return data || []
     }
 
     if (!selectedTopicId.value) {
       return []
     }
 
-    const { response } = await unsplash.topics.getPhotos({
-      topicIdOrSlug: selectedTopicId.value,
-      page: page.value,
-      perPage: DEFAULT_PER_PAGE
+    const { data } = await unsplashApiClient.get(`/topics/${selectedTopicId.value}/photos`, {
+      params: {
+        topic_id_or_slug: selectedTopicId.value,
+        page: page.value,
+        per_page: DEFAULT_PER_PAGE
+      }
     })
 
-    return response?.results || []
+    return data || []
   },
   onSuccess(data) {
     images.value = [...images.value, ...data]
   },
-  keepPreviousData: true,
-  enabled: computed(() => !!accessKey.value)
+  keepPreviousData: true
 })
 
 const {
