@@ -1,7 +1,7 @@
 apiVersion: plugin.halo.run/v1alpha1
 kind: Plugin
 metadata:
-  name: PluginUnsplash
+  name: image-stream
 spec:
   enabled: true
   version: 1.0.0
@@ -10,14 +10,13 @@ spec:
     name: Halo
     website: https://github.com/halo-dev
   logo: logo.svg
-  settingName: unsplash-settings
-  configMapName: unsplash-settings
-  repo: https://github.com/halo-sigs/plugin-unsplash
-  homepage: https://www.halo.run/store/apps/app-NRcGw
-  issues: https://github.com/halo-sigs/plugin-unsplash/issues
-  displayName: "Unsplash"
-  description: "提供从 Unsplash 选择或转存图片的能力"
+  settingName: image-stream-settings
+  configMapName: image-stream-configmap
+  repo: https://github.com/halo-sigs/plugin-image-stream
+  #homepage: https://www.halo.run/store/apps/app-NRcGw
+  issues: https://github.com/halo-sigs/plugin-image-stream/issues
+  displayName: "Image Stream"
+  description: "接入主流的图片资源平台，支持从图片平台选择、转存图片"
   license:
     - name: "GPL-3.0"
-      url: "https://github.com/halo-sigs/plugin-unsplash/blob/main/LICENSE"
-
+      url: "https://github.com/halo-sigs/plugin-image-stream/blob/main/LICENSE"

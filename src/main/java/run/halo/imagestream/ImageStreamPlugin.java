@@ -1,4 +1,4 @@
-package run.halo.unsplash;
+package run.halo.imagestream;
 
 import org.springframework.stereotype.Component;
 
@@ -10,9 +10,9 @@ import run.halo.app.plugin.PluginContext;
  * @since 2.0.0
  */
 @Component
-public class UnsplashPlugin extends BasePlugin {
+public class ImageStreamPlugin extends BasePlugin {
 
-    public UnsplashPlugin(PluginContext context) {
+    public ImageStreamPlugin(PluginContext context) {
         super(context);
     }
 

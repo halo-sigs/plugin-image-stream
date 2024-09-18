@@ -1,3 +1,4 @@
+import { PLUGIN_NAME } from '@/constants'
 import { consoleApiClient } from '@halo-dev/api-client'
 import { useQuery } from '@tanstack/vue-query'
 import { computed } from 'vue'
@@ -18,10 +19,10 @@ export function useConfig() {
     isLoading,
     isFetching
   } = useQuery({
-    queryKey: ['plugin:unsplash:basic-config'],
+    queryKey: ['plugin:image-stream:basic-config'],
     queryFn: async () => {
       const { data: configMap } = await consoleApiClient.plugin.plugin.fetchPluginConfig({
-        name: 'PluginUnsplash'
+        name: PLUGIN_NAME
       })
 
       return JSON.parse(configMap.data?.basic || '{}') as BasicConfig

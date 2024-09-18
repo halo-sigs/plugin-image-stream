@@ -1,7 +1,6 @@
 import { definePlugin } from '@halo-dev/console-shared'
 import { markRaw } from 'vue'
-import UnsplashSelectorProvider from './components/UnsplashSelectorProvider.vue'
-import './styles/tailwind.css'
+import ImageStreamProvider from './components/ImageStreamProvider.vue'
 
 export default definePlugin({
   components: {},
@@ -10,9 +9,9 @@ export default definePlugin({
     'attachment:selector:create': () => {
       return [
         {
-          id: 'unsplash',
-          label: 'Unsplash',
-          component: markRaw(UnsplashSelectorProvider)
+          id: 'image-stream',
+          label: 'Image Stream',
+          component: markRaw(ImageStreamProvider)
         }
       ]
     }

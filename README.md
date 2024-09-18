@@ -1,28 +1,38 @@
-# plugin-unsplash
+# plugin-image-stream
 
-Halo 2.0 接入 [Unsplash](https://unsplash.com/) 的插件，支持从 Unsplash 选择或者转存图片。
+接入主流的图片资源平台，支持从图片平台选择、转存图片，目前支持：
 
-![Screenshot](./screenshots/plugin-unsplash.png)
+- [Unsplash](https://unsplash.com/)
+- [Pixabay](https://pixabay.com)
+- [Pexels](https://www.pexels.com)
 
-## 安装与使用
+![Screenshot](./screenshots/plugin-image-stream.png)
 
-1. 进入 [Releases](https://github.com/halo-sigs/plugin-unsplash/releases) 下载最新版本的 JAR 文件。
-2. 在 Halo 后台的插件管理上传 JAR 文件进行安装。
-3. 启动该插件之后，需要在设置中配置 Unsplash 的 Access Key，详情可查阅：<https://unsplash.com/developers>
-4. 完成 Access Key 配置后，在后台任意位置选择附件的弹框中选择 Unsplash 选项卡，即可使用 Unsplash 的图片。
+> 此插件基于 [plugin-unsplash](https://github.com/halo-sigs/plugin-unsplash)，主要用于支持更多平台，详情见 <https://github.com/halo-sigs/plugin-unsplash/issues/15>
+
+**此项目正在开发中，不能直接使用，实现目标：**
+
+- 同时支持选择图片和提前转存图片再选择。
+- 由后端代理图片平台的接口。
+- 内置各个平台的 key，且支持自定义 key。
+- 处理权限相关的问题。
 
 ## 声明
 
-此插件所提供的内容均来自 [Unsplash](https://unsplash.com/)。
+此插件所提供的内容来自：
+
+- [Unsplash](https://unsplash.com/)：[版权声明](https://unsplash.com/license)
+- [Pixabay](https://pixabay.com)：[版权声明](https://pixabay.com/zh/service/license-summary/)
+- [Pexels](https://www.pexels.com)：[版权声明](https://www.pexels.com/license/)
 
 ## 开发环境
 
 ```bash
-git clone https://github.com/halo-sigs/plugin-unsplash
+git clone https://github.com/halo-sigs/plugin-image-stream
 ```
 
 ```bash
-cd path/to/plugin-unsplash
+cd path/to/plugin-image-stream
 ```
 
 ```bash
@@ -41,5 +51,5 @@ halo:
     lib-directories:
       - "libs"
     fixedPluginPath:
-      - "/path/to/plugin-unsplash"
+      - "/path/to/plugin-image-stream"
 ```

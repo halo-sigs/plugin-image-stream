@@ -1,7 +1,7 @@
 apiVersion: v1alpha1
 kind: Setting
 metadata:
-  name: unsplash-settings
+  name: image-stream-settings
 spec:
   forms:
     - group: basic
