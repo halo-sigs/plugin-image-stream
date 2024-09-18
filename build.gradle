@@ -60,10 +60,13 @@ tasks.register('generateApiKeysFile') {
         if (!outputDir.exists()) {
             outputDir.mkdirs()
         }
+        def unsplashApiKey = System.getenv('UNSPLASH_API_KEY') ?: project.findProperty('unsplashApiKey') ?: ""
+        def pexelsApiKey = System.getenv('PEXELS_API_KEY') ?: project.findProperty('pexelsApiKey') ?: ""
+        def pixabayApiKey = System.getenv('PIXABAY_API_KEY') ?: project.findProperty('pixabayApiKey') ?: ""
         apiKeysFile.withWriter('UTF-8') { writer ->
-            writer.writeLine("unsplash=${project.findProperty('unsplashApiKey') ?: ''}")
-            writer.writeLine("pexels=${project.findProperty('pexelsApiKey') ?: ''}")
-            writer.writeLine("pixabay=${project.findProperty('pixabayApiKey') ?: ''}")
+            writer.writeLine("unsplash=$unsplashApiKey")
+            writer.writeLine("pexels=$pexelsApiKey")
+            writer.writeLine("pixabay=$pixabayApiKey")
         }
 
         println "API keys properties file generated at: $apiKeysFile"
