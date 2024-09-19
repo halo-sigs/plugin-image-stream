@@ -1,9 +1,10 @@
 package run.halo.imagestream.client;
 
+import static org.springdoc.core.fn.builders.apiresponse.Builder.responseBuilder;
 import static org.springdoc.core.fn.builders.parameter.Builder.parameterBuilder;
-import static org.springdoc.core.fn.builders.requestbody.Builder.requestBodyBuilder;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import lombok.RequiredArgsConstructor;
 import org.springdoc.core.fn.builders.operation.Builder;
@@ -28,26 +29,30 @@ public class UnsplashEndpoint implements CustomEndpoint {
 
     @Override
     public RouterFunction<ServerResponse> endpoint() {
+        final var tag = "UnsplashV1alpha1";
         return SpringdocRouteBuilder.route()
             .GET("/photos/-/search", this::searchPhotos, builder -> {
                 builder.operationId("SearchPhotos")
                     .description("Search photos")
-                    .requestBody(requestBodyBuilder()
-                        .implementation(JsonNode.class));
+                    .tag(tag)
+                    .response(responseBuilder()
+                        .implementation(ObjectNode.class));
                 buildSearchPhotosParam(builder);
             })
             .GET("/topics", this::listTopics, builder -> {
                 builder.operationId("ListTopics")
                     .description("Get a single page from the list of all topics.")
-                    .requestBody(requestBodyBuilder()
-                        .implementation(JsonNode.class));
+                    .tag(tag)
+                    .response(responseBuilder()
+                        .implementation(ObjectNode.class));
                 buildListTopicsParam(builder);
             })
             .GET("/topics/{idOrSlug}/photos", this::getTopicPhotos, builder -> {
                 builder.operationId("GetTopicPhotos")
                     .description("Retrieve a topic’s photos.")
-                    .requestBody(requestBodyBuilder()
-                        .implementation(JsonNode.class));
+                    .tag(tag)
+                    .response(responseBuilder()
+                        .implementationArray(ObjectNode.class));
                 buildGetTopicPhotosParam(builder);
             })
             .build();
