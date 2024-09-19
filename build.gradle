@@ -80,3 +80,20 @@ tasks.named("processResources").configure {
 halo {
     version = "2.19.3"
 }
+
+haloPlugin {
+    openApi {
+        groupingRules {
+            extensionApis {
+                displayName = 'Extension API for Image Stream Plugin'
+                pathsToMatch = ['/apis/unsplash.halo.run/v1alpha1/**']
+            }
+        }
+        groupedApiMappings = [
+            '/v3/api-docs/extensionApis': 'extensionApis.json'
+        ]
+        generator {
+            outputDir = file("${projectDir}/console/src/api/generated")
+        }
+    }
+}

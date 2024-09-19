@@ -1,25 +1,30 @@
 <script lang="ts" setup>
+import { UnsplashV1alpha1Api } from '@/api/generated'
 import { useConfig } from '@/composables/use-config'
 import { useImageControl } from '@/composables/use-image-control'
 import { DEFAULT_PER_PAGE } from '@/constants'
 import { VButton, VLoading } from '@halo-dev/components'
 import type { AttachmentLike } from '@halo-dev/console-shared'
 import { useQuery } from '@tanstack/vue-query'
-import { createApi } from 'unsplash-js'
+import axios from 'axios'
 import type { Basic as Photo } from 'unsplash-js/dist/methods/photos/types'
+import type { Photos } from 'unsplash-js/dist/methods/search/types/response'
 import type { Basic as Topic } from 'unsplash-js/dist/methods/topics/types'
-import { computed, ref, watch } from 'vue'
+import { ref, watch } from 'vue'
 import DownloadButton from '../base/DownloadButton.vue'
 import DownloadModeSwitcher from '../base/DownloadModeSwitcher.vue'
 import ImageCard from '../base/ImageCard.vue'
 import ImageLayout from '../base/ImageLayout.vue'
-import axios from 'axios'
 
-const unsplash = createApi({ accessKey: import.meta.env.VITE_UNSPLASH_KEY })
-
-const unsplashApiClient = axios.create({
-  baseURL: '/apis/unsplash.halo.run/v1alpha1'
+const unsplashAxios = axios.create({
+  baseURL: ''
 })
+
+const unsplashApiClient = new UnsplashV1alpha1Api(
+  undefined,
+  unsplashAxios.defaults.baseURL,
+  unsplashAxios
+)
 
 const props = withDefaults(
   defineProps<{
@@ -48,14 +53,12 @@ const { isDownloadMode } = useConfig()
 const { data: topics } = useQuery<Topic[] | undefined>({
   queryKey: ['plugin:image-stream:unsplash:topics'],
   queryFn: async () => {
-    const { data } = await unsplashApiClient.get(`/topics`, {
-      params: {
-        page: 1,
-        per_page: 100,
-        order_by: 'featured'
-      }
+    const { data } = await unsplashApiClient.listTopics({
+      page: 1,
+      perPage: 100,
+      orderBy: 'featured'
     })
-    return data || []
+    return (data as Topic[]) || []
   },
   onSuccess(data) {
     if (data?.length) {
@@ -77,30 +80,26 @@ const { isFetching } = useQuery({
   queryKey: ['plugin:image-stream:unsplash:images', keyword, selectedTopicId, page],
   queryFn: async () => {
     if (keyword.value) {
-      const { data } = await unsplashApiClient.get(`/photos/-/search`, {
-        params: {
-          page: page.value,
-          per_page: DEFAULT_PER_PAGE,
-          query: keyword.value
-        }
+      const { data } = await unsplashApiClient.searchPhotos({
+        page: page.value,
+        perPage: DEFAULT_PER_PAGE,
+        query: keyword.value
       })
 
-      return data || []
+      return (data as Photos).results || []
     }
 
     if (!selectedTopicId.value) {
       return []
     }
 
-    const { data } = await unsplashApiClient.get(`/topics/${selectedTopicId.value}/photos`, {
-      params: {
-        topic_id_or_slug: selectedTopicId.value,
-        page: page.value,
-        per_page: DEFAULT_PER_PAGE
-      }
+    const { data } = await unsplashApiClient.getTopicPhotos({
+      idOrSlug: selectedTopicId.value,
+      page: page.value,
+      perPage: DEFAULT_PER_PAGE
     })
 
-    return data || []
+    return (data as Photo[]) || []
   },
   onSuccess(data) {
     images.value = [...images.value, ...data]
