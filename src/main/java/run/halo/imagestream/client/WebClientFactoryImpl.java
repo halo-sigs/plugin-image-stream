@@ -1,12 +1,14 @@
 package run.halo.imagestream.client;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Supplier;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.DisposableBean;
 import org.springframework.context.event.EventListener;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import run.halo.app.plugin.PluginConfigUpdatedEvent;
@@ -14,8 +16,8 @@ import run.halo.imagestream.model.BasicProp;
 
 @Component
 @RequiredArgsConstructor
-public class WebClientFactoryImpl implements WebClientFactory {
-    private static final Map<String, WebClient> WEB_CLIENTS = new HashMap<>(WebClientType.values().length, 1);
+public class WebClientFactoryImpl implements WebClientFactory, DisposableBean {
+    private static final Map<String, WebClient> WEB_CLIENTS = new ConcurrentHashMap<>(WebClientType.values().length, 1);
 
     private final ProvidedApiKeysLoader providedApiKeysLoader;
 
@@ -24,9 +26,9 @@ public class WebClientFactoryImpl implements WebClientFactory {
         return WEB_CLIENTS.get(clientType.name());
     }
 
+    @Async
     @EventListener(PluginConfigUpdatedEvent.class)
     public void onPluginConfigUpdated(PluginConfigUpdatedEvent event) {
-        WEB_CLIENTS.clear();
         var newConfig = event.getNewConfig();
         createClients(BasicProp.from(newConfig));
     }
@@ -76,5 +78,10 @@ public class WebClientFactoryImpl implements WebClientFactory {
             builder.defaultHeader("Authorization", authorizationValue);
         }
         return builder.build();
+    }
+
+    @Override
+    public void destroy() {
+        WEB_CLIENTS.clear();
     }
 }
