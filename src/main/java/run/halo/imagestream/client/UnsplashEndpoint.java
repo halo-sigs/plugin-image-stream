@@ -3,7 +3,6 @@ package run.halo.imagestream.client;
 import static org.springdoc.core.fn.builders.apiresponse.Builder.responseBuilder;
 import static org.springdoc.core.fn.builders.parameter.Builder.parameterBuilder;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +11,6 @@ import org.springdoc.webflux.core.fn.SpringdocRouteBuilder;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
-import org.springframework.web.reactive.function.client.ClientResponse;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.server.RouterFunction;
 import org.springframework.web.reactive.function.server.ServerRequest;
@@ -32,7 +30,7 @@ public class UnsplashEndpoint implements CustomEndpoint {
         final var tag = "UnsplashV1alpha1";
         return SpringdocRouteBuilder.route()
             .GET("/photos/-/search", this::searchPhotos, builder -> {
-                builder.operationId("SearchPhotos")
+                builder.operationId("SearchUnsplashPhotos")
                     .description("Search photos")
                     .tag(tag)
                     .response(responseBuilder()
@@ -40,7 +38,7 @@ public class UnsplashEndpoint implements CustomEndpoint {
                 buildSearchPhotosParam(builder);
             })
             .GET("/topics", this::listTopics, builder -> {
-                builder.operationId("ListTopics")
+                builder.operationId("ListUnsplashTopics")
                     .description("Get a single page from the list of all topics.")
                     .tag(tag)
                     .response(responseBuilder()
@@ -48,7 +46,7 @@ public class UnsplashEndpoint implements CustomEndpoint {
                 buildListTopicsParam(builder);
             })
             .GET("/topics/{idOrSlug}/photos", this::getTopicPhotos, builder -> {
-                builder.operationId("GetTopicPhotos")
+                builder.operationId("GetUnsplashTopicPhotos")
                     .description("Retrieve a topic’s photos.")
                     .tag(tag)
                     .response(responseBuilder()
@@ -63,7 +61,7 @@ public class UnsplashEndpoint implements CustomEndpoint {
         return unsplashClient.get()
             .uri(uriBuilder -> uriBuilder.path("/topics")
                 .queryParams(request.queryParams()).build())
-            .exchangeToMono(UnsplashEndpoint::responseExtractor);
+            .exchangeToMono(ClientUtils::responseExtractor);
     }
 
     private Mono<ServerResponse> getTopicPhotos(ServerRequest request) {
@@ -72,7 +70,7 @@ public class UnsplashEndpoint implements CustomEndpoint {
             .uri(uriBuilder -> uriBuilder.path("/topics/{idOrSlug}/photos")
                 .queryParams(request.queryParams())
                 .build(request.pathVariable("idOrSlug")))
-            .exchangeToMono(UnsplashEndpoint::responseExtractor);
+            .exchangeToMono(ClientUtils::responseExtractor);
     }
 
     private WebClient getUnsplashWebClient() {
@@ -86,15 +84,7 @@ public class UnsplashEndpoint implements CustomEndpoint {
                 .queryParams(request.queryParams())
                 .build())
             .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE)
-            .exchangeToMono(UnsplashEndpoint::responseExtractor);
-    }
-
-    private static Mono<ServerResponse> responseExtractor(ClientResponse clientResponse) {
-        var serverResponseBuilder = ServerResponse.status(clientResponse.statusCode())
-            .headers(headers -> headers.addAll(clientResponse.headers().asHttpHeaders()));
-        return clientResponse.bodyToMono(JsonNode.class)
-            .flatMap(serverResponseBuilder::bodyValue)
-            .switchIfEmpty(serverResponseBuilder.build());
+            .exchangeToMono(ClientUtils::responseExtractor);
     }
 
     public static void buildListTopicsParam(Builder builder) {
