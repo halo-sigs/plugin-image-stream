@@ -13,6 +13,7 @@ import DownloadButton from '../base/DownloadButton.vue'
 import DownloadModeSwitcher from '../base/DownloadModeSwitcher.vue'
 import ImageCard from '../base/ImageCard.vue'
 import ImageLayout from '../base/ImageLayout.vue'
+import { getFileNameFromUrl } from '@/utils'
 
 const IMAGE_TYPES = [
   {
@@ -219,7 +220,7 @@ const {
   (image) => image.id + '',
   (image) => image.largeImageURL,
   (image) => image.tags,
-  (image) => image.tags.split(',').join('-'),
+  (image) => getFileNameFromUrl(image.previewURL) || `${image.id}.jpg`,
   props.max
 )
 

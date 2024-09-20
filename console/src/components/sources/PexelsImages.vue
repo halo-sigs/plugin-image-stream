@@ -13,6 +13,7 @@ import DownloadButton from '../base/DownloadButton.vue'
 import DownloadModeSwitcher from '../base/DownloadModeSwitcher.vue'
 import ImageCard from '../base/ImageCard.vue'
 import ImageLayout from '../base/ImageLayout.vue'
+import { getFileNameFromUrl } from '@/utils'
 
 const props = withDefaults(
   defineProps<{
@@ -87,7 +88,7 @@ const {
   (image) => image.id + '',
   (image) => image.src.original,
   (image) => image.alt,
-  (image) => image.id + '',
+  (image) => getFileNameFromUrl(image.src.original) || `${image.id}.jpg`,
   props.max
 )
 
