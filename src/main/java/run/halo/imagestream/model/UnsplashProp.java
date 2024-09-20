@@ -4,5 +4,6 @@ import lombok.Data;
 
 @Data
 public class UnsplashProp {
-    private String accessKey;
+    public static final String SECRET_KEY = "unsplashApiKey";
+    private String apiKeySecretName;
 }

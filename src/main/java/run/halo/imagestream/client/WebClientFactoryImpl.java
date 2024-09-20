@@ -11,8 +11,13 @@ import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
+import run.halo.app.extension.ExtensionClient;
+import run.halo.app.extension.Secret;
 import run.halo.app.plugin.PluginConfigUpdatedEvent;
 import run.halo.imagestream.model.BasicProp;
+import run.halo.imagestream.model.PexelsProp;
+import run.halo.imagestream.model.PixabayProp;
+import run.halo.imagestream.model.UnsplashProp;
 
 @Component
 @RequiredArgsConstructor
@@ -20,6 +25,7 @@ public class WebClientFactoryImpl implements WebClientFactory, DisposableBean {
     private static final Map<String, WebClient> WEB_CLIENTS = new ConcurrentHashMap<>(WebClientType.values().length, 1);
 
     private final ProvidedApiKeysLoader providedApiKeysLoader;
+    private final ExtensionClient client;
 
     @Override
     public WebClient getWebClient(WebClientType clientType) {
@@ -58,14 +64,21 @@ public class WebClientFactoryImpl implements WebClientFactory, DisposableBean {
 
     private String getApiKeyOrProvided(WebClientType type, BasicProp basicProp) {
         Map<WebClientType, Supplier<String>> apiKeySuppliers = Map.of(
-            WebClientType.UNSPLASH, () -> basicProp.getUnsplash().getAccessKey(),
-            WebClientType.PEXELS, () -> basicProp.getPexels().getApiKey(),
-            WebClientType.PIXABAY, () -> basicProp.getPixabay().getApiKey()
+            WebClientType.UNSPLASH, () -> fetchApiKey(basicProp.getUnsplash().getApiKeySecretName(), UnsplashProp.SECRET_KEY),
+            WebClientType.PEXELS, () -> fetchApiKey(basicProp.getPexels().getApiKeySecretName(), PexelsProp.SECRET_KEY),
+            WebClientType.PIXABAY, () -> fetchApiKey(basicProp.getPixabay().getApiKeySecretName(), PixabayProp.SECRET_KEY)
         );
         return Optional.ofNullable(apiKeySuppliers.get(type))
             .map(Supplier::get)
             .filter(StringUtils::isNotBlank)
             .orElseGet(() -> fetchProvidedApiKey(type));
+    }
+
+    String fetchApiKey(String secretName, String key) {
+        return client.fetch(Secret.class, secretName)
+            .map(Secret::getStringData)
+            .map(data -> data.get(key))
+            .orElse(null);
     }
 
     private String fetchProvidedApiKey(WebClientType type) {

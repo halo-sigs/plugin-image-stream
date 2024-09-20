@@ -4,5 +4,6 @@ import lombok.Data;
 
 @Data
 public class PexelsProp {
-    private String apiKey;
+    public static final String SECRET_KEY = "pexelsApiKey";
+    private String apiKeySecretName;
 }
