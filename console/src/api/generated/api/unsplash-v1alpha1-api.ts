@@ -159,9 +159,9 @@ export const UnsplashV1alpha1ApiAxiosParamCreator = function (configuration?: Co
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        searchPhotos: async (query: string, page?: number, perPage?: number, orderBy?: string, color?: string, orientation?: string, contentFilter?: string, collections?: string, lang?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        searchPhotos1: async (query: string, page?: number, perPage?: number, orderBy?: string, color?: string, orientation?: string, contentFilter?: string, collections?: string, lang?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'query' is not null or undefined
-            assertParamExists('searchPhotos', 'query', query)
+            assertParamExists('searchPhotos1', 'query', query)
             const localVarPath = `/apis/unsplash.halo.run/v1alpha1/photos/-/search`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -284,10 +284,10 @@ export const UnsplashV1alpha1ApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async searchPhotos(query: string, page?: number, perPage?: number, orderBy?: string, color?: string, orientation?: string, contentFilter?: string, collections?: string, lang?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.searchPhotos(query, page, perPage, orderBy, color, orientation, contentFilter, collections, lang, options);
+        async searchPhotos1(query: string, page?: number, perPage?: number, orderBy?: string, color?: string, orientation?: string, contentFilter?: string, collections?: string, lang?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.searchPhotos1(query, page, perPage, orderBy, color, orientation, contentFilter, collections, lang, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['UnsplashV1alpha1Api.searchPhotos']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['UnsplashV1alpha1Api.searchPhotos1']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -320,12 +320,12 @@ export const UnsplashV1alpha1ApiFactory = function (configuration?: Configuratio
         },
         /**
          * Search photos
-         * @param {UnsplashV1alpha1ApiSearchPhotosRequest} requestParameters Request parameters.
+         * @param {UnsplashV1alpha1ApiSearchPhotos1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        searchPhotos(requestParameters: UnsplashV1alpha1ApiSearchPhotosRequest, options?: RawAxiosRequestConfig): AxiosPromise<object> {
-            return localVarFp.searchPhotos(requestParameters.query, requestParameters.page, requestParameters.perPage, requestParameters.orderBy, requestParameters.color, requestParameters.orientation, requestParameters.contentFilter, requestParameters.collections, requestParameters.lang, options).then((request) => request(axios, basePath));
+        searchPhotos1(requestParameters: UnsplashV1alpha1ApiSearchPhotos1Request, options?: RawAxiosRequestConfig): AxiosPromise<object> {
+            return localVarFp.searchPhotos1(requestParameters.query, requestParameters.page, requestParameters.perPage, requestParameters.orderBy, requestParameters.color, requestParameters.orientation, requestParameters.contentFilter, requestParameters.collections, requestParameters.lang, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -408,71 +408,71 @@ export interface UnsplashV1alpha1ApiListTopicsRequest {
 }
 
 /**
- * Request parameters for searchPhotos operation in UnsplashV1alpha1Api.
+ * Request parameters for searchPhotos1 operation in UnsplashV1alpha1Api.
  * @export
- * @interface UnsplashV1alpha1ApiSearchPhotosRequest
+ * @interface UnsplashV1alpha1ApiSearchPhotos1Request
  */
-export interface UnsplashV1alpha1ApiSearchPhotosRequest {
+export interface UnsplashV1alpha1ApiSearchPhotos1Request {
     /**
      * Search terms
      * @type {string}
-     * @memberof UnsplashV1alpha1ApiSearchPhotos
+     * @memberof UnsplashV1alpha1ApiSearchPhotos1
      */
     readonly query: string
 
     /**
      * Page number to retrieve. (Optional; default: 1)
      * @type {number}
-     * @memberof UnsplashV1alpha1ApiSearchPhotos
+     * @memberof UnsplashV1alpha1ApiSearchPhotos1
      */
     readonly page?: number
 
     /**
      * Number of items per page. (Optional; default: 10)
      * @type {number}
-     * @memberof UnsplashV1alpha1ApiSearchPhotos
+     * @memberof UnsplashV1alpha1ApiSearchPhotos1
      */
     readonly perPage?: number
 
     /**
      * How to sort the photos. (Optional; default: relevant). Valid values are latest and relevant.
      * @type {string}
-     * @memberof UnsplashV1alpha1ApiSearchPhotos
+     * @memberof UnsplashV1alpha1ApiSearchPhotos1
      */
     readonly orderBy?: string
 
     /**
      * Filter results by color. Optional. Valid values are: black_and_white, black, white, yellow, orange, red, purple, magenta, green, teal, and blue.
      * @type {string}
-     * @memberof UnsplashV1alpha1ApiSearchPhotos
+     * @memberof UnsplashV1alpha1ApiSearchPhotos1
      */
     readonly color?: string
 
     /**
      * Filter by photo orientation. Optional. (Valid values: landscape, portrait, squarish)
      * @type {string}
-     * @memberof UnsplashV1alpha1ApiSearchPhotos
+     * @memberof UnsplashV1alpha1ApiSearchPhotos1
      */
     readonly orientation?: string
 
     /**
      * Limit results by content safety. (Optional; default: low). Valid values are low and high.
      * @type {string}
-     * @memberof UnsplashV1alpha1ApiSearchPhotos
+     * @memberof UnsplashV1alpha1ApiSearchPhotos1
      */
     readonly contentFilter?: string
 
     /**
      * Collection ID(‘s) to narrow search. Optional. If multiple, comma-separated.
      * @type {string}
-     * @memberof UnsplashV1alpha1ApiSearchPhotos
+     * @memberof UnsplashV1alpha1ApiSearchPhotos1
      */
     readonly collections?: string
 
     /**
      * Beta parameters: Supported ISO 639-1 language code of the query. Optional, default: \&quot;en\&quot;
      * @type {string}
-     * @memberof UnsplashV1alpha1ApiSearchPhotos
+     * @memberof UnsplashV1alpha1ApiSearchPhotos1
      */
     readonly lang?: string
 }
@@ -508,13 +508,13 @@ export class UnsplashV1alpha1Api extends BaseAPI {
 
     /**
      * Search photos
-     * @param {UnsplashV1alpha1ApiSearchPhotosRequest} requestParameters Request parameters.
+     * @param {UnsplashV1alpha1ApiSearchPhotos1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof UnsplashV1alpha1Api
      */
-    public searchPhotos(requestParameters: UnsplashV1alpha1ApiSearchPhotosRequest, options?: RawAxiosRequestConfig) {
-        return UnsplashV1alpha1ApiFp(this.configuration).searchPhotos(requestParameters.query, requestParameters.page, requestParameters.perPage, requestParameters.orderBy, requestParameters.color, requestParameters.orientation, requestParameters.contentFilter, requestParameters.collections, requestParameters.lang, options).then((request) => request(this.axios, this.basePath));
+    public searchPhotos1(requestParameters: UnsplashV1alpha1ApiSearchPhotos1Request, options?: RawAxiosRequestConfig) {
+        return UnsplashV1alpha1ApiFp(this.configuration).searchPhotos1(requestParameters.query, requestParameters.page, requestParameters.perPage, requestParameters.orderBy, requestParameters.color, requestParameters.orientation, requestParameters.contentFilter, requestParameters.collections, requestParameters.lang, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

@@ -14,5 +14,7 @@
 
 
 
+export * from './api/pexels-v1alpha1-api';
+export * from './api/pixabay-v1alpha1-api';
 export * from './api/unsplash-v1alpha1-api';
 

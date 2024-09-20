@@ -86,7 +86,11 @@ haloPlugin {
         groupingRules {
             extensionApis {
                 displayName = 'Extension API for Image Stream Plugin'
-                pathsToMatch = ['/apis/unsplash.halo.run/v1alpha1/**']
+                pathsToMatch = [
+                    '/apis/unsplash.halo.run/v1alpha1/**',
+                    '/apis/pexels.halo.run/v1alpha1/**',
+                    '/apis/pixabay.halo.run/v1alpha1/**'
+                ]
             }
         }
         groupedApiMappings = [
