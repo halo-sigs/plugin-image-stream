@@ -34,7 +34,7 @@ export const PexelsV1alpha1ApiAxiosParamCreator = function (configuration?: Conf
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        curatedPhotos: async (page?: number, perPage?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        curatedPexPhotos: async (page?: number, perPage?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/apis/pexels.halo.run/v1alpha1/photos/-/curate`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -82,7 +82,7 @@ export const PexelsV1alpha1ApiAxiosParamCreator = function (configuration?: Conf
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        searchPhotos: async (page?: number, perPage?: number, query?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        searchPexPhotos: async (page?: number, perPage?: number, query?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/apis/pexels.halo.run/v1alpha1/photos/-/search`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -143,10 +143,10 @@ export const PexelsV1alpha1ApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async curatedPhotos(page?: number, perPage?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.curatedPhotos(page, perPage, options);
+        async curatedPexPhotos(page?: number, perPage?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.curatedPexPhotos(page, perPage, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PexelsV1alpha1Api.curatedPhotos']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PexelsV1alpha1Api.curatedPexPhotos']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -157,10 +157,10 @@ export const PexelsV1alpha1ApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async searchPhotos(page?: number, perPage?: number, query?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.searchPhotos(page, perPage, query, options);
+        async searchPexPhotos(page?: number, perPage?: number, query?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.searchPexPhotos(page, perPage, query, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PexelsV1alpha1Api.searchPhotos']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PexelsV1alpha1Api.searchPexPhotos']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -175,70 +175,70 @@ export const PexelsV1alpha1ApiFactory = function (configuration?: Configuration,
     return {
         /**
          * This endpoint enables you to receive real-time photos curated by the Pexels team.
-         * @param {PexelsV1alpha1ApiCuratedPhotosRequest} requestParameters Request parameters.
+         * @param {PexelsV1alpha1ApiCuratedPexPhotosRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        curatedPhotos(requestParameters: PexelsV1alpha1ApiCuratedPhotosRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<object> {
-            return localVarFp.curatedPhotos(requestParameters.page, requestParameters.perPage, options).then((request) => request(axios, basePath));
+        curatedPexPhotos(requestParameters: PexelsV1alpha1ApiCuratedPexPhotosRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<object> {
+            return localVarFp.curatedPexPhotos(requestParameters.page, requestParameters.perPage, options).then((request) => request(axios, basePath));
         },
         /**
          * Search photos for pexels
-         * @param {PexelsV1alpha1ApiSearchPhotosRequest} requestParameters Request parameters.
+         * @param {PexelsV1alpha1ApiSearchPexPhotosRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        searchPhotos(requestParameters: PexelsV1alpha1ApiSearchPhotosRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<object> {
-            return localVarFp.searchPhotos(requestParameters.page, requestParameters.perPage, requestParameters.query, options).then((request) => request(axios, basePath));
+        searchPexPhotos(requestParameters: PexelsV1alpha1ApiSearchPexPhotosRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<object> {
+            return localVarFp.searchPexPhotos(requestParameters.page, requestParameters.perPage, requestParameters.query, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for curatedPhotos operation in PexelsV1alpha1Api.
+ * Request parameters for curatedPexPhotos operation in PexelsV1alpha1Api.
  * @export
- * @interface PexelsV1alpha1ApiCuratedPhotosRequest
+ * @interface PexelsV1alpha1ApiCuratedPexPhotosRequest
  */
-export interface PexelsV1alpha1ApiCuratedPhotosRequest {
+export interface PexelsV1alpha1ApiCuratedPexPhotosRequest {
     /**
      * The page number you are requesting. Default: 1
      * @type {number}
-     * @memberof PexelsV1alpha1ApiCuratedPhotos
+     * @memberof PexelsV1alpha1ApiCuratedPexPhotos
      */
     readonly page?: number
 
     /**
      * The number of results you are requesting per page.Default: 15, Max: 80
      * @type {number}
-     * @memberof PexelsV1alpha1ApiCuratedPhotos
+     * @memberof PexelsV1alpha1ApiCuratedPexPhotos
      */
     readonly perPage?: number
 }
 
 /**
- * Request parameters for searchPhotos operation in PexelsV1alpha1Api.
+ * Request parameters for searchPexPhotos operation in PexelsV1alpha1Api.
  * @export
- * @interface PexelsV1alpha1ApiSearchPhotosRequest
+ * @interface PexelsV1alpha1ApiSearchPexPhotosRequest
  */
-export interface PexelsV1alpha1ApiSearchPhotosRequest {
+export interface PexelsV1alpha1ApiSearchPexPhotosRequest {
     /**
      * The page number you are requesting. Default: 1
      * @type {number}
-     * @memberof PexelsV1alpha1ApiSearchPhotos
+     * @memberof PexelsV1alpha1ApiSearchPexPhotos
      */
     readonly page?: number
 
     /**
      * The number of results you are requesting per page.Default: 15, Max: 80
      * @type {number}
-     * @memberof PexelsV1alpha1ApiSearchPhotos
+     * @memberof PexelsV1alpha1ApiSearchPexPhotos
      */
     readonly perPage?: number
 
     /**
      * The search query. Ocean, Tigers, Pears, etc.
      * @type {string}
-     * @memberof PexelsV1alpha1ApiSearchPhotos
+     * @memberof PexelsV1alpha1ApiSearchPexPhotos
      */
     readonly query?: string
 }
@@ -252,24 +252,24 @@ export interface PexelsV1alpha1ApiSearchPhotosRequest {
 export class PexelsV1alpha1Api extends BaseAPI {
     /**
      * This endpoint enables you to receive real-time photos curated by the Pexels team.
-     * @param {PexelsV1alpha1ApiCuratedPhotosRequest} requestParameters Request parameters.
+     * @param {PexelsV1alpha1ApiCuratedPexPhotosRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PexelsV1alpha1Api
      */
-    public curatedPhotos(requestParameters: PexelsV1alpha1ApiCuratedPhotosRequest = {}, options?: RawAxiosRequestConfig) {
-        return PexelsV1alpha1ApiFp(this.configuration).curatedPhotos(requestParameters.page, requestParameters.perPage, options).then((request) => request(this.axios, this.basePath));
+    public curatedPexPhotos(requestParameters: PexelsV1alpha1ApiCuratedPexPhotosRequest = {}, options?: RawAxiosRequestConfig) {
+        return PexelsV1alpha1ApiFp(this.configuration).curatedPexPhotos(requestParameters.page, requestParameters.perPage, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Search photos for pexels
-     * @param {PexelsV1alpha1ApiSearchPhotosRequest} requestParameters Request parameters.
+     * @param {PexelsV1alpha1ApiSearchPexPhotosRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PexelsV1alpha1Api
      */
-    public searchPhotos(requestParameters: PexelsV1alpha1ApiSearchPhotosRequest = {}, options?: RawAxiosRequestConfig) {
-        return PexelsV1alpha1ApiFp(this.configuration).searchPhotos(requestParameters.page, requestParameters.perPage, requestParameters.query, options).then((request) => request(this.axios, this.basePath));
+    public searchPexPhotos(requestParameters: PexelsV1alpha1ApiSearchPexPhotosRequest = {}, options?: RawAxiosRequestConfig) {
+        return PexelsV1alpha1ApiFp(this.configuration).searchPexPhotos(requestParameters.page, requestParameters.perPage, requestParameters.query, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

@@ -39,7 +39,7 @@ export const PixabayV1alpha1ApiAxiosParamCreator = function (configuration?: Con
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        searchImages: async (q?: string, page?: number, perPage?: number, imageType?: string, category?: string, order?: string, safesearch?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        searchPixImages: async (q?: string, page?: number, perPage?: number, imageType?: string, category?: string, order?: string, safesearch?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/apis/pixabay.halo.run/v1alpha1/photos/-/search`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -121,10 +121,10 @@ export const PixabayV1alpha1ApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async searchImages(q?: string, page?: number, perPage?: number, imageType?: string, category?: string, order?: string, safesearch?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.searchImages(q, page, perPage, imageType, category, order, safesearch, options);
+        async searchPixImages(q?: string, page?: number, perPage?: number, imageType?: string, category?: string, order?: string, safesearch?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.searchPixImages(q, page, perPage, imageType, category, order, safesearch, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PixabayV1alpha1Api.searchImages']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PixabayV1alpha1Api.searchPixImages']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -139,68 +139,68 @@ export const PixabayV1alpha1ApiFactory = function (configuration?: Configuration
     return {
         /**
          * Search images
-         * @param {PixabayV1alpha1ApiSearchImagesRequest} requestParameters Request parameters.
+         * @param {PixabayV1alpha1ApiSearchPixImagesRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        searchImages(requestParameters: PixabayV1alpha1ApiSearchImagesRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<object> {
-            return localVarFp.searchImages(requestParameters.q, requestParameters.page, requestParameters.perPage, requestParameters.imageType, requestParameters.category, requestParameters.order, requestParameters.safesearch, options).then((request) => request(axios, basePath));
+        searchPixImages(requestParameters: PixabayV1alpha1ApiSearchPixImagesRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<object> {
+            return localVarFp.searchPixImages(requestParameters.q, requestParameters.page, requestParameters.perPage, requestParameters.imageType, requestParameters.category, requestParameters.order, requestParameters.safesearch, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for searchImages operation in PixabayV1alpha1Api.
+ * Request parameters for searchPixImages operation in PixabayV1alpha1Api.
  * @export
- * @interface PixabayV1alpha1ApiSearchImagesRequest
+ * @interface PixabayV1alpha1ApiSearchPixImagesRequest
  */
-export interface PixabayV1alpha1ApiSearchImagesRequest {
+export interface PixabayV1alpha1ApiSearchPixImagesRequest {
     /**
      * A URL encoded search term. If omitted, all images are returned. This value may not exceed 100 characters. Example: \&quot;yellow+flower\&quot;
      * @type {string}
-     * @memberof PixabayV1alpha1ApiSearchImages
+     * @memberof PixabayV1alpha1ApiSearchPixImages
      */
     readonly q?: string
 
     /**
      * Returned search results are paginated. Use this parameter to select the page number. Default: 1
      * @type {number}
-     * @memberof PixabayV1alpha1ApiSearchImages
+     * @memberof PixabayV1alpha1ApiSearchPixImages
      */
     readonly page?: number
 
     /**
      * Determine the number of results per page. Accepted values: 3 - 200 Default: 20 
      * @type {number}
-     * @memberof PixabayV1alpha1ApiSearchImages
+     * @memberof PixabayV1alpha1ApiSearchPixImages
      */
     readonly perPage?: number
 
     /**
      *  Filter results by image type.  Accepted values: \&quot;all\&quot;, \&quot;photo\&quot;, \&quot;illustration\&quot;, \&quot;vector\&quot;  Default: \&quot;all\&quot; 
      * @type {string}
-     * @memberof PixabayV1alpha1ApiSearchImages
+     * @memberof PixabayV1alpha1ApiSearchPixImages
      */
     readonly imageType?: string
 
     /**
      * Filter results by category. Accepted values: backgrounds, fashion, nature, science, education, feelings, health, people, religion, places, animals, industry, computer, food, sports, transportation, travel,  buildings, business, music 
      * @type {string}
-     * @memberof PixabayV1alpha1ApiSearchImages
+     * @memberof PixabayV1alpha1ApiSearchPixImages
      */
     readonly category?: string
 
     /**
      * How the results should be ordered. Accepted values: \&quot;popular\&quot;, \&quot;latest\&quot; Default: \&quot;popular\&quot; 
      * @type {string}
-     * @memberof PixabayV1alpha1ApiSearchImages
+     * @memberof PixabayV1alpha1ApiSearchPixImages
      */
     readonly order?: string
 
     /**
      * A flag indicating that only images suitable for all ages should be returned. Accepted values: \&quot;true\&quot;, \&quot;false\&quot; Default: \&quot;false\&quot; 
      * @type {string}
-     * @memberof PixabayV1alpha1ApiSearchImages
+     * @memberof PixabayV1alpha1ApiSearchPixImages
      */
     readonly safesearch?: string
 }
@@ -214,13 +214,13 @@ export interface PixabayV1alpha1ApiSearchImagesRequest {
 export class PixabayV1alpha1Api extends BaseAPI {
     /**
      * Search images
-     * @param {PixabayV1alpha1ApiSearchImagesRequest} requestParameters Request parameters.
+     * @param {PixabayV1alpha1ApiSearchPixImagesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PixabayV1alpha1Api
      */
-    public searchImages(requestParameters: PixabayV1alpha1ApiSearchImagesRequest = {}, options?: RawAxiosRequestConfig) {
-        return PixabayV1alpha1ApiFp(this.configuration).searchImages(requestParameters.q, requestParameters.page, requestParameters.perPage, requestParameters.imageType, requestParameters.category, requestParameters.order, requestParameters.safesearch, options).then((request) => request(this.axios, this.basePath));
+    public searchPixImages(requestParameters: PixabayV1alpha1ApiSearchPixImagesRequest = {}, options?: RawAxiosRequestConfig) {
+        return PixabayV1alpha1ApiFp(this.configuration).searchPixImages(requestParameters.q, requestParameters.page, requestParameters.perPage, requestParameters.imageType, requestParameters.category, requestParameters.order, requestParameters.safesearch, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

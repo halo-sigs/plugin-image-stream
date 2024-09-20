@@ -176,7 +176,7 @@ const { isFetching } = useQuery({
     selectedOrderType
   ],
   queryFn: async () => {
-    const { data } = await pixabayApiClient.searchImages({
+    const { data } = await pixabayApiClient.searchPixImages({
       q: keyword.value,
       page: page.value,
       perPage: DEFAULT_PER_PAGE,

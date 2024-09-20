@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { PexelsV1alpha1Api } from '@/api/generated'
 import { useConfig } from '@/composables/use-config'
 import { useImageControl } from '@/composables/use-image-control'
 import { DEFAULT_PER_PAGE } from '@/constants'
@@ -30,12 +31,11 @@ const emit = defineEmits<{
   (event: 'update:selected', attachments: AttachmentLike[]): void
 }>()
 
-const pexels = axios.create({
-  baseURL: 'https://api.pexels.com',
-  headers: {
-    Authorization: import.meta.env.VITE_PEXELS_KEY
-  }
+const pexelsAxios = axios.create({
+  baseURL: ''
 })
+
+const pexelsApiClient = new PexelsV1alpha1Api(undefined, pexelsAxios.defaults.baseURL, pexelsAxios)
 
 const { isDownloadMode } = useConfig()
 
@@ -47,22 +47,18 @@ const { isFetching } = useQuery({
   queryKey: ['plugin:image-stream:pexels:images', page, keyword],
   queryFn: async () => {
     if (keyword.value) {
-      const { data } = await pexels.get<PexelsPhotoResponse>('/v1/search', {
-        params: {
-          per_page: DEFAULT_PER_PAGE,
-          page: page.value,
-          query: keyword.value
-        }
+      const { data } = await pexelsApiClient.searchPexPhotos({
+        perPage: DEFAULT_PER_PAGE,
+        page: page.value,
+        query: keyword.value
       })
-      return data
+      return data as PexelsPhotoResponse
     }
-    const { data } = await pexels.get<PexelsPhotoResponse>('/v1/curated', {
-      params: {
-        per_page: DEFAULT_PER_PAGE,
-        page: page.value
-      }
+    const { data } = await pexelsApiClient.curatedPexPhotos({
+      perPage: DEFAULT_PER_PAGE,
+      page: page.value
     })
-    return data
+    return data as PexelsPhotoResponse
   },
   onSuccess(data) {
     images.value = [...images.value, ...data.photos]

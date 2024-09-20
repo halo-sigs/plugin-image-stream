@@ -53,7 +53,7 @@ const { isDownloadMode } = useConfig()
 const { data: topics } = useQuery<Topic[] | undefined>({
   queryKey: ['plugin:image-stream:unsplash:topics'],
   queryFn: async () => {
-    const { data } = await unsplashApiClient.listTopics({
+    const { data } = await unsplashApiClient.listUnsplashTopics({
       page: 1,
       perPage: 100,
       orderBy: 'featured'
@@ -80,7 +80,7 @@ const { isFetching } = useQuery({
   queryKey: ['plugin:image-stream:unsplash:images', keyword, selectedTopicId, page],
   queryFn: async () => {
     if (keyword.value) {
-      const { data } = await unsplashApiClient.searchPhotos({
+      const { data } = await unsplashApiClient.searchUnsplashPhotos({
         page: page.value,
         perPage: DEFAULT_PER_PAGE,
         query: keyword.value
@@ -93,7 +93,7 @@ const { isFetching } = useQuery({
       return []
     }
 
-    const { data } = await unsplashApiClient.getTopicPhotos({
+    const { data } = await unsplashApiClient.getUnsplashTopicPhotos({
       idOrSlug: selectedTopicId.value,
       page: page.value,
       perPage: DEFAULT_PER_PAGE
