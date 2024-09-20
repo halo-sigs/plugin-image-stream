@@ -1,6 +1,7 @@
 package run.halo.imagestream.client;
 
 import static org.springdoc.core.fn.builders.apiresponse.Builder.responseBuilder;
+import static org.springdoc.core.fn.builders.content.Builder.contentBuilder;
 import static org.springdoc.core.fn.builders.parameter.Builder.parameterBuilder;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -8,6 +9,7 @@ import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import lombok.RequiredArgsConstructor;
 import org.springdoc.core.fn.builders.operation.Builder;
 import org.springdoc.webflux.core.fn.SpringdocRouteBuilder;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.server.RouterFunction;
@@ -32,6 +34,8 @@ public class PixabayEndpoint implements CustomEndpoint {
                     .description("Search images")
                     .tag(tag)
                     .response(responseBuilder()
+                        .content(contentBuilder()
+                            .mediaType(MediaType.APPLICATION_JSON_VALUE))
                         .implementation(ObjectNode.class));
                 buildParam(builder);
             })
