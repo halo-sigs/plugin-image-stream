@@ -8,35 +8,9 @@ spec:
       label: 基本设置
       formSchema:
         - $formkit: group
-          label: Unsplash
-          name: unsplash
-          children:
-            - $formkit: secret
-              help: 插件中已经内置，如果你需要使用自己的 Access Key，可以在 https://unsplash.com/developers 申请并填写。
-              requiredKey: unsplashApiKey
-              label: Access Key
-              name: apiKeySecretName
-        - $formkit: group
-          label: Pexels
-          name: pexels
-          children:
-            - $formkit: secret
-              help: 插件中已经内置，如果你需要使用自己的 API Key，可以在 https://www.pexels.com/api 申请并填写。
-              requiredKey: pexelsApiKey
-              label: API Key
-              name: apiKeySecretName
-        - $formkit: group
-          label: Pixabay
-          name: pixabay
-          children:
-            - $formkit: secret
-              help: 插件中已经内置，如果你需要使用自己的 API Key，可以在 https://pixabay.com/zh/service/about/api 申请并填写。
-              requiredKey: pixabayApiKey
-              label: API key
-              name: apiKeySecretName
-        - $formkit: group
           label: 转存模式
           name: downloadMode
+          id: downloadMode
           help: 开启之后，可以先转存到附件库，然后选择图片
           value:
             enable: false
@@ -46,18 +20,6 @@ spec:
               name: enable
               id: enable
               label: 启用
-            - $formkit: select
-              name: urlType
-              label: 图片质量
-              options:
-                - label: 原图
-                  value: raw
-                - label: 大尺寸
-                  value: full
-                - label: 中尺寸
-                  value: regular
-                - label: 小图
-                  value: small
             - $formkit: select
               if: "$value.enable"
               action: "/apis/storage.halo.run/v1alpha1/policies"
@@ -82,3 +44,44 @@ spec:
               requestOption:
                 labelField: "spec.displayName"
                 valueField: "metadata.name"
+        - $formkit: group
+          label: Unsplash
+          name: unsplash
+          children:
+            - $formkit: secret
+              help: 插件中已经内置，如果你需要使用自己的 Access Key，可以在 https://unsplash.com/developers 申请并填写。
+              requiredKey: unsplashApiKey
+              label: Access Key
+              name: apiKeySecretName
+            - $formkit: select
+              if: "$get(downloadMode).value.enable"
+              name: urlType
+              label: 转存图片质量
+              value: raw
+              options:
+                - label: 原图
+                  value: raw
+                - label: 大尺寸
+                  value: full
+                - label: 中尺寸
+                  value: regular
+                - label: 小图
+                  value: small
+        - $formkit: group
+          label: Pexels
+          name: pexels
+          children:
+            - $formkit: secret
+              help: 插件中已经内置，如果你需要使用自己的 API Key，可以在 https://www.pexels.com/api 申请并填写。
+              requiredKey: pexelsApiKey
+              label: API Key
+              name: apiKeySecretName
+        - $formkit: group
+          label: Pixabay
+          name: pixabay
+          children:
+            - $formkit: secret
+              help: 插件中已经内置，如果你需要使用自己的 API Key，可以在 https://pixabay.com/zh/service/about/api 申请并填写。
+              requiredKey: pixabayApiKey
+              label: API key
+              name: apiKeySecretName
