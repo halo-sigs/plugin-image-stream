@@ -17,7 +17,7 @@ repositories {
 
 dependencies {
 
-    implementation platform('run.halo.tools.platform:plugin:2.10.0-SNAPSHOT')
+    implementation platform('run.halo.tools.platform:plugin:2.18.0-SNAPSHOT')
     compileOnly 'run.halo.app:api'
 
     testImplementation 'run.halo.app:api'
@@ -52,6 +52,48 @@ build {
     }
 }
 
+tasks.register('generateApiKeysFile') {
+    def outputDir = layout.buildDirectory.dir("resources/main").get().asFile
+    def apiKeysFile = file("$outputDir/apiKeys.properties")
+
+    doLast {
+        if (!outputDir.exists()) {
+            outputDir.mkdirs()
+        }
+        def unsplashApiKey = System.getenv('UNSPLASH_API_KEY') ?: project.findProperty('unsplashApiKey') ?: ""
+        def pexelsApiKey = System.getenv('PEXELS_API_KEY') ?: project.findProperty('pexelsApiKey') ?: ""
+        def pixabayApiKey = System.getenv('PIXABAY_API_KEY') ?: project.findProperty('pixabayApiKey') ?: ""
+        apiKeysFile.withWriter('UTF-8') { writer ->
+            writer.writeLine("unsplash=$unsplashApiKey")
+            writer.writeLine("pexels=$pexelsApiKey")
+            writer.writeLine("pixabay=$pixabayApiKey")
+        }
+
+        println "API keys properties file generated at: $apiKeysFile"
+    }
+}
+
+tasks.named("processResources").configure {
+    dependsOn("generateApiKeysFile")
+}
+
 halo {
     version = "2.19.3"
+}
+
+haloPlugin {
+    openApi {
+        groupingRules {
+            extensionApis {
+                displayName = 'Extension API for Image Stream Plugin'
+                pathsToMatch = ['/apis/unsplash.halo.run/v1alpha1/**']
+            }
+        }
+        groupedApiMappings = [
+            '/v3/api-docs/extensionApis': 'extensionApis.json'
+        ]
+        generator {
+            outputDir = file("${projectDir}/console/src/api/generated")
+        }
+    }
 }
