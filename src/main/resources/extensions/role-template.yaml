@@ -4,17 +4,18 @@ metadata:
   name: role-template-image-stream
   labels:
     halo.run/role-template: "true"
+    halo.run/hidden: "true"
     rbac.authorization.halo.run/aggregate-to-role-template-view-attachments: "true"
   annotations:
     rbac.authorization.halo.run/module: "Attachments Management"
     rbac.authorization.halo.run/display-name: "Image Stream"
 rules:
-  - apiGroups: [ "unsplash.halo.run" ]
-    resources: [ "photos/search", "topics", "topics/photos" ]
-    verbs: [ "get", "list" ]
-  - apiGroups: [ "pexels.halo.run" ]
-    resources: [ "photos/search", "photos/curate" ]
-    verbs: [ "get", "list" ]
-  - apiGroups: [ "pixabay.halo.run" ]
-    resources: [ "photos/search" ]
-    verbs: [ "get", "list" ]
+  - apiGroups: ["unsplash.halo.run"]
+    resources: ["photos/search", "topics", "topics/photos"]
+    verbs: ["get", "list"]
+  - apiGroups: ["pexels.halo.run"]
+    resources: ["photos/search", "photos/curate"]
+    verbs: ["get", "list"]
+  - apiGroups: ["pixabay.halo.run"]
+    resources: ["photos/search"]
+    verbs: ["get", "list"]

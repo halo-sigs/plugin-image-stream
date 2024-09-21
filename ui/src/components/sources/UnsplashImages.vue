@@ -164,14 +164,17 @@ watch(
         ]"
       />
     </div>
-    <div class="flex flex-none items-center gap-2">
-      <DownloadButton
-        v-if="isDownloadMode && selectedImages.size"
-        :loading="downloading"
-        @click="handleDownloadImage"
-      />
-      <DownloadModeSwitcher />
-    </div>
+
+    <HasPermission :permissions="['system:attachments:manage']">
+      <div class="flex flex-none items-center gap-2">
+        <DownloadButton
+          v-if="isDownloadMode && selectedImages.size"
+          :loading="downloading"
+          @click="handleDownloadImage"
+        />
+        <DownloadModeSwitcher />
+      </div>
+    </HasPermission>
   </div>
 
   <VLoading v-if="isFetching && images.length === 0" />

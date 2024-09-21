@@ -242,14 +242,17 @@ watch(
       <FilterDropdown v-model="selectedCategory" label="类别" :items="CATEGORIES" />
       <FilterDropdown v-model="selectedOrderType" label="排序" :items="ORDER_TYPES" />
     </div>
-    <div class="flex flex-none items-center gap-2">
-      <DownloadButton
-        v-if="isDownloadMode && selectedImages.size"
-        :loading="downloading"
-        @click="handleDownloadImage"
-      />
-      <DownloadModeSwitcher />
-    </div>
+
+    <HasPermission :permissions="['system:attachments:manage']">
+      <div class="flex flex-none items-center gap-2">
+        <DownloadButton
+          v-if="isDownloadMode && selectedImages.size"
+          :loading="downloading"
+          @click="handleDownloadImage"
+        />
+        <DownloadModeSwitcher />
+      </div>
+    </HasPermission>
   </div>
 
   <VLoading v-if="isFetching && images.length === 0" />
