@@ -33,7 +33,7 @@ tasks.withType(JavaCompile).configureEach {
 }
 
 node {
-    nodeProjectDir = file("${project.projectDir}/console")
+    nodeProjectDir = file("${project.projectDir}/ui")
 }
 
 tasks.register('buildFrontend', PnpmTask) {
@@ -97,7 +97,7 @@ haloPlugin {
             '/v3/api-docs/extensionApis': 'extensionApis.json'
         ]
         generator {
-            outputDir = file("${projectDir}/console/src/api/generated")
+            outputDir = file("${projectDir}/ui/src/api/generated")
         }
     }
 }
