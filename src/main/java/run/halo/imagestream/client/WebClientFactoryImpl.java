@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.context.event.EventListener;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -53,7 +55,7 @@ public class WebClientFactoryImpl implements WebClientFactory, DisposableBean {
                     WEB_CLIENTS.put(value.name(), pexelsClient);
                     break;
                 case PIXABAY:
-                    var pixabayClient = createClient("https://pixabay.com/api", accessKey);
+                    var pixabayClient = createClient("https://pixabay.com/api?key=" + accessKey, null);
                     WEB_CLIENTS.put(value.name(), pixabayClient);
                     break;
                 default:
@@ -86,9 +88,10 @@ public class WebClientFactoryImpl implements WebClientFactory, DisposableBean {
     }
 
     private WebClient createClient(String baseUrl, String authorizationValue) {
-        var builder = WebClient.builder().baseUrl(baseUrl);
+        var builder = WebClient.builder().baseUrl(baseUrl)
+            .defaultHeader(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE);
         if (StringUtils.isNotBlank(authorizationValue)) {
-            builder.defaultHeader("Authorization", authorizationValue);
+            builder.defaultHeader(HttpHeaders.AUTHORIZATION, authorizationValue);
         }
         return builder.build();
     }

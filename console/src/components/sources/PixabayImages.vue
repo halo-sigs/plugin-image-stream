@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { PixabayV1alpha1Api } from '@/api/generated'
 import { useConfig } from '@/composables/use-config'
 import { useImageControl } from '@/composables/use-image-control'
 import { DEFAULT_PER_PAGE } from '@/constants'
@@ -12,6 +13,7 @@ import DownloadButton from '../base/DownloadButton.vue'
 import DownloadModeSwitcher from '../base/DownloadModeSwitcher.vue'
 import ImageCard from '../base/ImageCard.vue'
 import ImageLayout from '../base/ImageLayout.vue'
+import { getFileNameFromUrl } from '@/utils'
 
 const IMAGE_TYPES = [
   {
@@ -146,6 +148,16 @@ const emit = defineEmits<{
   (event: 'update:selected', attachments: AttachmentLike[]): void
 }>()
 
+const pixabayAxios = axios.create({
+  baseURL: ''
+})
+
+const pixabayApiClient = new PixabayV1alpha1Api(
+  undefined,
+  pixabayAxios.defaults.baseURL,
+  pixabayAxios
+)
+
 const images = ref<PixabayHit[]>([])
 const keyword = ref('')
 const selectedImageType = ref(IMAGE_TYPES[0].value)
@@ -165,19 +177,16 @@ const { isFetching } = useQuery({
     selectedOrderType
   ],
   queryFn: async () => {
-    const { data } = await axios.get<PixabayResponse>('https://pixabay.com/api/', {
-      params: {
-        key: import.meta.env.VITE_PIXABAY_KEY,
-        q: keyword.value,
-        page: page.value,
-        per_page: DEFAULT_PER_PAGE,
-        image_type: selectedImageType.value,
-        category: selectedCategory.value,
-        order: selectedOrderType.value,
-        safesearch: true
-      }
+    const { data } = await pixabayApiClient.searchPixImages({
+      q: keyword.value,
+      page: page.value,
+      perPage: DEFAULT_PER_PAGE,
+      imageType: selectedImageType.value,
+      category: selectedCategory.value,
+      order: selectedOrderType.value,
+      safesearch: 'true'
     })
-    return data
+    return data as PixabayResponse
   },
   onSuccess(data) {
     images.value = [...images.value, ...data.hits]
@@ -211,7 +220,7 @@ const {
   (image) => image.id + '',
   (image) => image.largeImageURL,
   (image) => image.tags,
-  (image) => image.tags.split(',').join('-'),
+  (image) => getFileNameFromUrl(image.previewURL) || `${image.id}.jpg`,
   props.max
 )
 

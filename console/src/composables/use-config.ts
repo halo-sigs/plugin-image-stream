@@ -4,7 +4,6 @@ import { useQuery } from '@tanstack/vue-query'
 import { computed } from 'vue'
 
 export interface BasicConfig {
-  accessKey?: string
   downloadMode?: {
     enable?: boolean
     policyName?: string
@@ -29,10 +28,9 @@ export function useConfig() {
     }
   })
 
-  const accessKey = computed(() => basicConfig.value?.accessKey)
   const isDownloadMode = computed(() => {
     return basicConfig.value?.downloadMode?.enable && basicConfig.value.downloadMode.policyName
   })
 
-  return { basicConfig, accessKey, isDownloadMode, isLoading, isFetching }
+  return { basicConfig, isDownloadMode, isLoading, isFetching }
 }

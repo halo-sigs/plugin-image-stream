@@ -37,9 +37,9 @@ export const UnsplashV1alpha1ApiAxiosParamCreator = function (configuration?: Co
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getTopicPhotos: async (idOrSlug: string, page?: number, perPage?: number, orderBy?: string, orientation?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getUnsplashTopicPhotos: async (idOrSlug: string, page?: number, perPage?: number, orderBy?: string, orientation?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'idOrSlug' is not null or undefined
-            assertParamExists('getTopicPhotos', 'idOrSlug', idOrSlug)
+            assertParamExists('getUnsplashTopicPhotos', 'idOrSlug', idOrSlug)
             const localVarPath = `/apis/unsplash.halo.run/v1alpha1/topics/{idOrSlug}/photos`
                 .replace(`{${"idOrSlug"}}`, encodeURIComponent(String(idOrSlug)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -97,7 +97,7 @@ export const UnsplashV1alpha1ApiAxiosParamCreator = function (configuration?: Co
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listTopics: async (page?: number, perPage?: number, ids?: string, orderBy?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        listUnsplashTopics: async (page?: number, perPage?: number, ids?: string, orderBy?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/apis/unsplash.halo.run/v1alpha1/topics`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -159,9 +159,9 @@ export const UnsplashV1alpha1ApiAxiosParamCreator = function (configuration?: Co
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        searchPhotos: async (query: string, page?: number, perPage?: number, orderBy?: string, color?: string, orientation?: string, contentFilter?: string, collections?: string, lang?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        searchUnsplashPhotos: async (query: string, page?: number, perPage?: number, orderBy?: string, color?: string, orientation?: string, contentFilter?: string, collections?: string, lang?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'query' is not null or undefined
-            assertParamExists('searchPhotos', 'query', query)
+            assertParamExists('searchUnsplashPhotos', 'query', query)
             const localVarPath = `/apis/unsplash.halo.run/v1alpha1/photos/-/search`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -249,10 +249,10 @@ export const UnsplashV1alpha1ApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getTopicPhotos(idOrSlug: string, page?: number, perPage?: number, orderBy?: string, orientation?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<object>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getTopicPhotos(idOrSlug, page, perPage, orderBy, orientation, options);
+        async getUnsplashTopicPhotos(idOrSlug: string, page?: number, perPage?: number, orderBy?: string, orientation?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<object>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getUnsplashTopicPhotos(idOrSlug, page, perPage, orderBy, orientation, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['UnsplashV1alpha1Api.getTopicPhotos']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['UnsplashV1alpha1Api.getUnsplashTopicPhotos']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -264,10 +264,10 @@ export const UnsplashV1alpha1ApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async listTopics(page?: number, perPage?: number, ids?: string, orderBy?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.listTopics(page, perPage, ids, orderBy, options);
+        async listUnsplashTopics(page?: number, perPage?: number, ids?: string, orderBy?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listUnsplashTopics(page, perPage, ids, orderBy, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['UnsplashV1alpha1Api.listTopics']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['UnsplashV1alpha1Api.listUnsplashTopics']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -284,10 +284,10 @@ export const UnsplashV1alpha1ApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async searchPhotos(query: string, page?: number, perPage?: number, orderBy?: string, color?: string, orientation?: string, contentFilter?: string, collections?: string, lang?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.searchPhotos(query, page, perPage, orderBy, color, orientation, contentFilter, collections, lang, options);
+        async searchUnsplashPhotos(query: string, page?: number, perPage?: number, orderBy?: string, color?: string, orientation?: string, contentFilter?: string, collections?: string, lang?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.searchUnsplashPhotos(query, page, perPage, orderBy, color, orientation, contentFilter, collections, lang, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['UnsplashV1alpha1Api.searchPhotos']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['UnsplashV1alpha1Api.searchUnsplashPhotos']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -302,177 +302,177 @@ export const UnsplashV1alpha1ApiFactory = function (configuration?: Configuratio
     return {
         /**
          * Retrieve a topic’s photos.
-         * @param {UnsplashV1alpha1ApiGetTopicPhotosRequest} requestParameters Request parameters.
+         * @param {UnsplashV1alpha1ApiGetUnsplashTopicPhotosRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getTopicPhotos(requestParameters: UnsplashV1alpha1ApiGetTopicPhotosRequest, options?: RawAxiosRequestConfig): AxiosPromise<Array<object>> {
-            return localVarFp.getTopicPhotos(requestParameters.idOrSlug, requestParameters.page, requestParameters.perPage, requestParameters.orderBy, requestParameters.orientation, options).then((request) => request(axios, basePath));
+        getUnsplashTopicPhotos(requestParameters: UnsplashV1alpha1ApiGetUnsplashTopicPhotosRequest, options?: RawAxiosRequestConfig): AxiosPromise<Array<object>> {
+            return localVarFp.getUnsplashTopicPhotos(requestParameters.idOrSlug, requestParameters.page, requestParameters.perPage, requestParameters.orderBy, requestParameters.orientation, options).then((request) => request(axios, basePath));
         },
         /**
          * Get a single page from the list of all topics.
-         * @param {UnsplashV1alpha1ApiListTopicsRequest} requestParameters Request parameters.
+         * @param {UnsplashV1alpha1ApiListUnsplashTopicsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listTopics(requestParameters: UnsplashV1alpha1ApiListTopicsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<object> {
-            return localVarFp.listTopics(requestParameters.page, requestParameters.perPage, requestParameters.ids, requestParameters.orderBy, options).then((request) => request(axios, basePath));
+        listUnsplashTopics(requestParameters: UnsplashV1alpha1ApiListUnsplashTopicsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<object> {
+            return localVarFp.listUnsplashTopics(requestParameters.page, requestParameters.perPage, requestParameters.ids, requestParameters.orderBy, options).then((request) => request(axios, basePath));
         },
         /**
          * Search photos
-         * @param {UnsplashV1alpha1ApiSearchPhotosRequest} requestParameters Request parameters.
+         * @param {UnsplashV1alpha1ApiSearchUnsplashPhotosRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        searchPhotos(requestParameters: UnsplashV1alpha1ApiSearchPhotosRequest, options?: RawAxiosRequestConfig): AxiosPromise<object> {
-            return localVarFp.searchPhotos(requestParameters.query, requestParameters.page, requestParameters.perPage, requestParameters.orderBy, requestParameters.color, requestParameters.orientation, requestParameters.contentFilter, requestParameters.collections, requestParameters.lang, options).then((request) => request(axios, basePath));
+        searchUnsplashPhotos(requestParameters: UnsplashV1alpha1ApiSearchUnsplashPhotosRequest, options?: RawAxiosRequestConfig): AxiosPromise<object> {
+            return localVarFp.searchUnsplashPhotos(requestParameters.query, requestParameters.page, requestParameters.perPage, requestParameters.orderBy, requestParameters.color, requestParameters.orientation, requestParameters.contentFilter, requestParameters.collections, requestParameters.lang, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for getTopicPhotos operation in UnsplashV1alpha1Api.
+ * Request parameters for getUnsplashTopicPhotos operation in UnsplashV1alpha1Api.
  * @export
- * @interface UnsplashV1alpha1ApiGetTopicPhotosRequest
+ * @interface UnsplashV1alpha1ApiGetUnsplashTopicPhotosRequest
  */
-export interface UnsplashV1alpha1ApiGetTopicPhotosRequest {
+export interface UnsplashV1alpha1ApiGetUnsplashTopicPhotosRequest {
     /**
      * The topic ID or slug.
      * @type {string}
-     * @memberof UnsplashV1alpha1ApiGetTopicPhotos
+     * @memberof UnsplashV1alpha1ApiGetUnsplashTopicPhotos
      */
     readonly idOrSlug: string
 
     /**
      * Page number to retrieve. (Optional; default: 1)
      * @type {number}
-     * @memberof UnsplashV1alpha1ApiGetTopicPhotos
+     * @memberof UnsplashV1alpha1ApiGetUnsplashTopicPhotos
      */
     readonly page?: number
 
     /**
      * Number of items per page. (Optional; default: 10)
      * @type {number}
-     * @memberof UnsplashV1alpha1ApiGetTopicPhotos
+     * @memberof UnsplashV1alpha1ApiGetUnsplashTopicPhotos
      */
     readonly perPage?: number
 
     /**
      * How to sort the photos. (Optional; default: latest). Valid values are latest and oldest.
      * @type {string}
-     * @memberof UnsplashV1alpha1ApiGetTopicPhotos
+     * @memberof UnsplashV1alpha1ApiGetUnsplashTopicPhotos
      */
     readonly orderBy?: string
 
     /**
      * Filter by photo orientation. (Optional; Valid values: landscape, portrait, squarish)
      * @type {string}
-     * @memberof UnsplashV1alpha1ApiGetTopicPhotos
+     * @memberof UnsplashV1alpha1ApiGetUnsplashTopicPhotos
      */
     readonly orientation?: string
 }
 
 /**
- * Request parameters for listTopics operation in UnsplashV1alpha1Api.
+ * Request parameters for listUnsplashTopics operation in UnsplashV1alpha1Api.
  * @export
- * @interface UnsplashV1alpha1ApiListTopicsRequest
+ * @interface UnsplashV1alpha1ApiListUnsplashTopicsRequest
  */
-export interface UnsplashV1alpha1ApiListTopicsRequest {
+export interface UnsplashV1alpha1ApiListUnsplashTopicsRequest {
     /**
      * Page number to retrieve. (Optional; default: 1)
      * @type {number}
-     * @memberof UnsplashV1alpha1ApiListTopics
+     * @memberof UnsplashV1alpha1ApiListUnsplashTopics
      */
     readonly page?: number
 
     /**
      * Number of items per page. (Optional; default: 10)
      * @type {number}
-     * @memberof UnsplashV1alpha1ApiListTopics
+     * @memberof UnsplashV1alpha1ApiListUnsplashTopics
      */
     readonly perPage?: number
 
     /**
      * Limit to only matching topic ids or slugs. (Optional; Comma separated string)
      * @type {string}
-     * @memberof UnsplashV1alpha1ApiListTopics
+     * @memberof UnsplashV1alpha1ApiListUnsplashTopics
      */
     readonly ids?: string
 
     /**
      * How to sort the topics. (Optional; Valid values: featured, latest, oldest, position; default: position)
      * @type {string}
-     * @memberof UnsplashV1alpha1ApiListTopics
+     * @memberof UnsplashV1alpha1ApiListUnsplashTopics
      */
     readonly orderBy?: string
 }
 
 /**
- * Request parameters for searchPhotos operation in UnsplashV1alpha1Api.
+ * Request parameters for searchUnsplashPhotos operation in UnsplashV1alpha1Api.
  * @export
- * @interface UnsplashV1alpha1ApiSearchPhotosRequest
+ * @interface UnsplashV1alpha1ApiSearchUnsplashPhotosRequest
  */
-export interface UnsplashV1alpha1ApiSearchPhotosRequest {
+export interface UnsplashV1alpha1ApiSearchUnsplashPhotosRequest {
     /**
      * Search terms
      * @type {string}
-     * @memberof UnsplashV1alpha1ApiSearchPhotos
+     * @memberof UnsplashV1alpha1ApiSearchUnsplashPhotos
      */
     readonly query: string
 
     /**
      * Page number to retrieve. (Optional; default: 1)
      * @type {number}
-     * @memberof UnsplashV1alpha1ApiSearchPhotos
+     * @memberof UnsplashV1alpha1ApiSearchUnsplashPhotos
      */
     readonly page?: number
 
     /**
      * Number of items per page. (Optional; default: 10)
      * @type {number}
-     * @memberof UnsplashV1alpha1ApiSearchPhotos
+     * @memberof UnsplashV1alpha1ApiSearchUnsplashPhotos
      */
     readonly perPage?: number
 
     /**
      * How to sort the photos. (Optional; default: relevant). Valid values are latest and relevant.
      * @type {string}
-     * @memberof UnsplashV1alpha1ApiSearchPhotos
+     * @memberof UnsplashV1alpha1ApiSearchUnsplashPhotos
      */
     readonly orderBy?: string
 
     /**
      * Filter results by color. Optional. Valid values are: black_and_white, black, white, yellow, orange, red, purple, magenta, green, teal, and blue.
      * @type {string}
-     * @memberof UnsplashV1alpha1ApiSearchPhotos
+     * @memberof UnsplashV1alpha1ApiSearchUnsplashPhotos
      */
     readonly color?: string
 
     /**
      * Filter by photo orientation. Optional. (Valid values: landscape, portrait, squarish)
      * @type {string}
-     * @memberof UnsplashV1alpha1ApiSearchPhotos
+     * @memberof UnsplashV1alpha1ApiSearchUnsplashPhotos
      */
     readonly orientation?: string
 
     /**
      * Limit results by content safety. (Optional; default: low). Valid values are low and high.
      * @type {string}
-     * @memberof UnsplashV1alpha1ApiSearchPhotos
+     * @memberof UnsplashV1alpha1ApiSearchUnsplashPhotos
      */
     readonly contentFilter?: string
 
     /**
      * Collection ID(‘s) to narrow search. Optional. If multiple, comma-separated.
      * @type {string}
-     * @memberof UnsplashV1alpha1ApiSearchPhotos
+     * @memberof UnsplashV1alpha1ApiSearchUnsplashPhotos
      */
     readonly collections?: string
 
     /**
      * Beta parameters: Supported ISO 639-1 language code of the query. Optional, default: \&quot;en\&quot;
      * @type {string}
-     * @memberof UnsplashV1alpha1ApiSearchPhotos
+     * @memberof UnsplashV1alpha1ApiSearchUnsplashPhotos
      */
     readonly lang?: string
 }
@@ -486,35 +486,35 @@ export interface UnsplashV1alpha1ApiSearchPhotosRequest {
 export class UnsplashV1alpha1Api extends BaseAPI {
     /**
      * Retrieve a topic’s photos.
-     * @param {UnsplashV1alpha1ApiGetTopicPhotosRequest} requestParameters Request parameters.
+     * @param {UnsplashV1alpha1ApiGetUnsplashTopicPhotosRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof UnsplashV1alpha1Api
      */
-    public getTopicPhotos(requestParameters: UnsplashV1alpha1ApiGetTopicPhotosRequest, options?: RawAxiosRequestConfig) {
-        return UnsplashV1alpha1ApiFp(this.configuration).getTopicPhotos(requestParameters.idOrSlug, requestParameters.page, requestParameters.perPage, requestParameters.orderBy, requestParameters.orientation, options).then((request) => request(this.axios, this.basePath));
+    public getUnsplashTopicPhotos(requestParameters: UnsplashV1alpha1ApiGetUnsplashTopicPhotosRequest, options?: RawAxiosRequestConfig) {
+        return UnsplashV1alpha1ApiFp(this.configuration).getUnsplashTopicPhotos(requestParameters.idOrSlug, requestParameters.page, requestParameters.perPage, requestParameters.orderBy, requestParameters.orientation, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Get a single page from the list of all topics.
-     * @param {UnsplashV1alpha1ApiListTopicsRequest} requestParameters Request parameters.
+     * @param {UnsplashV1alpha1ApiListUnsplashTopicsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof UnsplashV1alpha1Api
      */
-    public listTopics(requestParameters: UnsplashV1alpha1ApiListTopicsRequest = {}, options?: RawAxiosRequestConfig) {
-        return UnsplashV1alpha1ApiFp(this.configuration).listTopics(requestParameters.page, requestParameters.perPage, requestParameters.ids, requestParameters.orderBy, options).then((request) => request(this.axios, this.basePath));
+    public listUnsplashTopics(requestParameters: UnsplashV1alpha1ApiListUnsplashTopicsRequest = {}, options?: RawAxiosRequestConfig) {
+        return UnsplashV1alpha1ApiFp(this.configuration).listUnsplashTopics(requestParameters.page, requestParameters.perPage, requestParameters.ids, requestParameters.orderBy, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Search photos
-     * @param {UnsplashV1alpha1ApiSearchPhotosRequest} requestParameters Request parameters.
+     * @param {UnsplashV1alpha1ApiSearchUnsplashPhotosRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof UnsplashV1alpha1Api
      */
-    public searchPhotos(requestParameters: UnsplashV1alpha1ApiSearchPhotosRequest, options?: RawAxiosRequestConfig) {
-        return UnsplashV1alpha1ApiFp(this.configuration).searchPhotos(requestParameters.query, requestParameters.page, requestParameters.perPage, requestParameters.orderBy, requestParameters.color, requestParameters.orientation, requestParameters.contentFilter, requestParameters.collections, requestParameters.lang, options).then((request) => request(this.axios, this.basePath));
+    public searchUnsplashPhotos(requestParameters: UnsplashV1alpha1ApiSearchUnsplashPhotosRequest, options?: RawAxiosRequestConfig) {
+        return UnsplashV1alpha1ApiFp(this.configuration).searchUnsplashPhotos(requestParameters.query, requestParameters.page, requestParameters.perPage, requestParameters.orderBy, requestParameters.color, requestParameters.orientation, requestParameters.contentFilter, requestParameters.collections, requestParameters.lang, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

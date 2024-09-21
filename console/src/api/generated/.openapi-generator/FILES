@@ -2,6 +2,8 @@
 .npmignore
 .openapi-generator-ignore
 api.ts
+api/pexels-v1alpha1-api.ts
+api/pixabay-v1alpha1-api.ts
 api/unsplash-v1alpha1-api.ts
 base.ts
 common.ts
