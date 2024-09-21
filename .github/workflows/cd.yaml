@@ -16,4 +16,4 @@ jobs:
       app-id: app-NRcGw
       node-version: "20"
       pnpm-version: "9"
-      ui-path: "console"
+      ui-path: "ui"
