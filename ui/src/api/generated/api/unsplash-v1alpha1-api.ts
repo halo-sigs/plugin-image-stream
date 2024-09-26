@@ -229,6 +229,47 @@ export const UnsplashV1alpha1ApiAxiosParamCreator = function (configuration?: Co
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * Track a photo download.
+         * @param {string} id The photo ID.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        trackUnsplashPhotoDownload: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('trackUnsplashPhotoDownload', 'id', id)
+            const localVarPath = `/apis/unsplash.halo.run/v1alpha1/photos/{id}/download`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication basicAuth required
+            // http basic authentication required
+            setBasicAuthToObject(localVarRequestOptions, configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -290,6 +331,18 @@ export const UnsplashV1alpha1ApiFp = function(configuration?: Configuration) {
             const localVarOperationServerBasePath = operationServerMap['UnsplashV1alpha1Api.searchUnsplashPhotos']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
+        /**
+         * Track a photo download.
+         * @param {string} id The photo ID.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async trackUnsplashPhotoDownload(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.trackUnsplashPhotoDownload(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['UnsplashV1alpha1Api.trackUnsplashPhotoDownload']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
     }
 };
 
@@ -326,6 +379,15 @@ export const UnsplashV1alpha1ApiFactory = function (configuration?: Configuratio
          */
         searchUnsplashPhotos(requestParameters: UnsplashV1alpha1ApiSearchUnsplashPhotosRequest, options?: RawAxiosRequestConfig): AxiosPromise<object> {
             return localVarFp.searchUnsplashPhotos(requestParameters.query, requestParameters.page, requestParameters.perPage, requestParameters.orderBy, requestParameters.color, requestParameters.orientation, requestParameters.contentFilter, requestParameters.collections, requestParameters.lang, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Track a photo download.
+         * @param {UnsplashV1alpha1ApiTrackUnsplashPhotoDownloadRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        trackUnsplashPhotoDownload(requestParameters: UnsplashV1alpha1ApiTrackUnsplashPhotoDownloadRequest, options?: RawAxiosRequestConfig): AxiosPromise<object> {
+            return localVarFp.trackUnsplashPhotoDownload(requestParameters.id, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -478,6 +540,20 @@ export interface UnsplashV1alpha1ApiSearchUnsplashPhotosRequest {
 }
 
 /**
+ * Request parameters for trackUnsplashPhotoDownload operation in UnsplashV1alpha1Api.
+ * @export
+ * @interface UnsplashV1alpha1ApiTrackUnsplashPhotoDownloadRequest
+ */
+export interface UnsplashV1alpha1ApiTrackUnsplashPhotoDownloadRequest {
+    /**
+     * The photo ID.
+     * @type {string}
+     * @memberof UnsplashV1alpha1ApiTrackUnsplashPhotoDownload
+     */
+    readonly id: string
+}
+
+/**
  * UnsplashV1alpha1Api - object-oriented interface
  * @export
  * @class UnsplashV1alpha1Api
@@ -515,6 +591,17 @@ export class UnsplashV1alpha1Api extends BaseAPI {
      */
     public searchUnsplashPhotos(requestParameters: UnsplashV1alpha1ApiSearchUnsplashPhotosRequest, options?: RawAxiosRequestConfig) {
         return UnsplashV1alpha1ApiFp(this.configuration).searchUnsplashPhotos(requestParameters.query, requestParameters.page, requestParameters.perPage, requestParameters.orderBy, requestParameters.color, requestParameters.orientation, requestParameters.contentFilter, requestParameters.collections, requestParameters.lang, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Track a photo download.
+     * @param {UnsplashV1alpha1ApiTrackUnsplashPhotoDownloadRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UnsplashV1alpha1Api
+     */
+    public trackUnsplashPhotoDownload(requestParameters: UnsplashV1alpha1ApiTrackUnsplashPhotoDownloadRequest, options?: RawAxiosRequestConfig) {
+        return UnsplashV1alpha1ApiFp(this.configuration).trackUnsplashPhotoDownload(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

@@ -49,11 +49,40 @@ public class UnsplashEndpoint implements CustomEndpoint {
                 builder.operationId("GetUnsplashTopicPhotos")
                     .description("Retrieve a topic’s photos.")
                     .tag(tag)
+                    .parameter(parameterBuilder()
+                        .name("idOrSlug")
+                        .description("The topic ID or slug.")
+                        .in(ParameterIn.PATH)
+                        .required(true)
+                    )
                     .response(responseBuilder()
-                        .implementationArray(ObjectNode.class));
+                        .implementationArray(ObjectNode.class)
+                    );
                 buildGetTopicPhotosParam(builder);
             })
+            .GET("/photos/{id}/download", this::trackPhotoDownload, builder ->
+                builder.operationId("TrackUnsplashPhotoDownload")
+                    .description("Track a photo download.")
+                    .tag(tag)
+                    .parameter(parameterBuilder()
+                        .in(ParameterIn.PATH)
+                        .name("id")
+                        .description("The photo ID.")
+                        .required(true)
+                    )
+                    .response(responseBuilder()
+                        .implementation(ObjectNode.class))
+            )
             .build();
+    }
+
+    private Mono<ServerResponse> trackPhotoDownload(ServerRequest request) {
+        var unsplashClient = getUnsplashWebClient();
+        return unsplashClient.get()
+            .uri(uriBuilder -> uriBuilder.path("/photos/{id}/download")
+                .build(request.pathVariable("id"))
+            )
+            .exchangeToMono(ClientUtils::responseExtractor);
     }
 
     private Mono<ServerResponse> listTopics(ServerRequest request) {
@@ -117,11 +146,6 @@ public class UnsplashEndpoint implements CustomEndpoint {
 
     public static void buildGetTopicPhotosParam(Builder builder) {
         builder.parameter(parameterBuilder()
-                .name("idOrSlug")
-                .description("The topic ID or slug.")
-                .in(ParameterIn.PATH)
-                .required(true))
-            .parameter(parameterBuilder()
                 .name("page")
                 .in(ParameterIn.QUERY)
                 .description("Page number to retrieve. (Optional; default: 1)")

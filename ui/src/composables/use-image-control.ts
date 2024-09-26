@@ -14,6 +14,7 @@ export function useImageControl<T>(
   urlHandler: (image: T) => string,
   altHandler: (image: T) => string,
   fileNameHandler: (image: T) => string,
+  afterDownloadHandler?: (image: T) => Promise<void>,
   max?: number
 ) {
   const selectedImages = ref<Set<T>>(new Set()) as Ref<Set<T>>
@@ -188,6 +189,8 @@ export function useImageControl<T>(
       })
 
       await refetchAttachments()
+
+      await afterDownloadHandler?.(image)
     } catch (error) {
       throw new Error(`上传失败: ${(error as Error).message}`)
     }
