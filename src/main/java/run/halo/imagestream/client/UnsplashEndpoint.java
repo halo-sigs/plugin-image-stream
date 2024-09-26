@@ -53,7 +53,23 @@ public class UnsplashEndpoint implements CustomEndpoint {
                         .implementationArray(ObjectNode.class));
                 buildGetTopicPhotosParam(builder);
             })
+            .GET("/photos/{id}/download", this::trackPhotoDownload, builder ->
+                builder.operationId("TrackUnsplashPhotoDownload")
+                    .description("Track a photo download.")
+                    .tag(tag)
+                    .response(responseBuilder()
+                        .implementation(ObjectNode.class))
+            )
             .build();
+    }
+
+    private Mono<ServerResponse> trackPhotoDownload(ServerRequest request) {
+        var unsplashClient = getUnsplashWebClient();
+        return unsplashClient.get()
+            .uri(uriBuilder -> uriBuilder.path("/photos/{id}/download")
+                .build(request.pathVariable("id"))
+            )
+            .exchangeToMono(ClientUtils::responseExtractor);
     }
 
     private Mono<ServerResponse> listTopics(ServerRequest request) {
