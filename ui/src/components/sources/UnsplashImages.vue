@@ -124,6 +124,11 @@ const {
   (image) => {
     return `${image.alt_description?.toLowerCase().replace(/\s+/g, '-') || image.id}.jpg`
   },
+  async (image) => {
+    await unsplashApiClient.trackUnsplashPhotoDownload({
+      id: image.id
+    })
+  },
   props.max
 )
 

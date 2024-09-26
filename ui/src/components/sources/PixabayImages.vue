@@ -221,6 +221,7 @@ const {
   (image) => image.largeImageURL,
   (image) => image.tags,
   (image) => getFileNameFromUrl(image.previewURL) || `${image.id}.jpg`,
+  undefined,
   props.max
 )
 
