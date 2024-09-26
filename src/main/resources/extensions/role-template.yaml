@@ -19,3 +19,7 @@ rules:
   - apiGroups: [ "pixabay.halo.run" ]
     resources: [ "photos/search" ]
     verbs: [ "get", "list" ]
+  - apiGroups: [ "" ]
+    resources: [ "configmaps" ]
+    resourceNames: [ "image-stream-configmap" ]
+    verbs: [ "get" ]
