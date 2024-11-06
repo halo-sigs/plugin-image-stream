@@ -4,10 +4,10 @@ import { useConfig } from '@/composables/use-config'
 import { useImageControl } from '@/composables/use-image-control'
 import { DEFAULT_PER_PAGE } from '@/constants'
 import type { PexelsPhoto, PexelsPhotoResponse } from '@/types'
-import { VButton, VLoading } from '@halo-dev/components'
+import { Toast, VButton, VLoading } from '@halo-dev/components'
 import type { AttachmentLike } from '@halo-dev/console-shared'
 import { useQuery } from '@tanstack/vue-query'
-import axios from 'axios'
+import axios, { AxiosError } from 'axios'
 import { ref, watch } from 'vue'
 import DownloadButton from '../base/DownloadButton.vue'
 import DownloadModeSwitcher from '../base/DownloadModeSwitcher.vue'
@@ -61,8 +61,18 @@ const { isFetching } = useQuery({
     })
     return data as PexelsPhotoResponse
   },
+  retry: 0,
   onSuccess(data) {
     images.value = [...images.value, ...data.photos]
+  },
+  onError(e) {
+    if (e instanceof AxiosError) {
+      Toast.error(e.response?.data)
+      return
+    }
+    if (e instanceof Error) {
+      Toast.error(e.message)
+    }
   }
 })
 

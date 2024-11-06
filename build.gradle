@@ -78,7 +78,7 @@ tasks.named("processResources").configure {
 }
 
 halo {
-    version = "2.19.3"
+    version = "2.20"
 }
 
 haloPlugin {

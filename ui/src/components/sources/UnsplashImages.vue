@@ -3,10 +3,10 @@ import { UnsplashV1alpha1Api } from '@/api/generated'
 import { useConfig } from '@/composables/use-config'
 import { useImageControl } from '@/composables/use-image-control'
 import { DEFAULT_PER_PAGE } from '@/constants'
-import { VButton, VLoading } from '@halo-dev/components'
+import { Toast, VButton, VLoading } from '@halo-dev/components'
 import type { AttachmentLike } from '@halo-dev/console-shared'
 import { useQuery } from '@tanstack/vue-query'
-import axios from 'axios'
+import axios, { AxiosError } from 'axios'
 import type { Basic as Photo } from 'unsplash-js/dist/methods/photos/types'
 import type { Photos } from 'unsplash-js/dist/methods/search/types/response'
 import type { Basic as Topic } from 'unsplash-js/dist/methods/topics/types'
@@ -60,9 +60,19 @@ const { data: topics } = useQuery<Topic[] | undefined>({
     })
     return (data as Topic[]) || []
   },
+  retry: 0,
   onSuccess(data) {
     if (data?.length) {
       selectedTopicId.value = data[0].id
+    }
+  },
+  onError(e) {
+    if (e instanceof AxiosError) {
+      Toast.error(e.response?.data)
+      return
+    }
+    if (e instanceof Error) {
+      Toast.error(e.message)
     }
   }
 })
@@ -101,8 +111,18 @@ const { isFetching } = useQuery({
 
     return (data as Photo[]) || []
   },
+  retry: 0,
   onSuccess(data) {
     images.value = [...images.value, ...data]
+  },
+  onError(e) {
+    if (e instanceof AxiosError) {
+      Toast.error(e.response?.data)
+      return
+    }
+    if (e instanceof Error) {
+      Toast.error(e.message)
+    }
   },
   keepPreviousData: true
 })

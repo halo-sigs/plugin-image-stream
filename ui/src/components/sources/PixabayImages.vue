@@ -4,10 +4,10 @@ import { useConfig } from '@/composables/use-config'
 import { useImageControl } from '@/composables/use-image-control'
 import { DEFAULT_PER_PAGE } from '@/constants'
 import type { PixabayHit, PixabayResponse } from '@/types'
-import { VButton, VLoading } from '@halo-dev/components'
+import { Toast, VButton, VLoading } from '@halo-dev/components'
 import type { AttachmentLike } from '@halo-dev/console-shared'
 import { useQuery } from '@tanstack/vue-query'
-import axios from 'axios'
+import axios, { AxiosError } from 'axios'
 import { ref, watch } from 'vue'
 import DownloadButton from '../base/DownloadButton.vue'
 import DownloadModeSwitcher from '../base/DownloadModeSwitcher.vue'
@@ -188,8 +188,24 @@ const { isFetching } = useQuery({
     })
     return data as PixabayResponse
   },
+  retry: 0,
   onSuccess(data) {
     images.value = [...images.value, ...data.hits]
+  },
+  onError(e) {
+    if (e instanceof AxiosError) {
+      const data = e.response?.data
+
+      if ('detail' in data) {
+        Toast.error(data.detail)
+      } else {
+        Toast.error(data)
+      }
+      return
+    }
+    if (e instanceof Error) {
+      Toast.error(e.message)
+    }
   }
 })
 
