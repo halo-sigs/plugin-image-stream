@@ -20,9 +20,14 @@ export function useConfig() {
   } = useQuery({
     queryKey: ['plugin:image-stream:basic-config'],
     queryFn: async () => {
-      const { data: configMap } = await consoleApiClient.plugin.plugin.fetchPluginConfig({
-        name: PLUGIN_NAME
-      })
+      const { data: configMap } = await consoleApiClient.plugin.plugin.fetchPluginConfig(
+        {
+          name: PLUGIN_NAME
+        },
+        {
+          mute: true
+        }
+      )
 
       return JSON.parse(configMap.data?.basic || '{}') as BasicConfig
     }
