@@ -4,6 +4,7 @@ import { useConfig } from '@/composables/use-config'
 import { useImageControl } from '@/composables/use-image-control'
 import { DEFAULT_PER_PAGE } from '@/constants'
 import type { PexelsPhoto, PexelsPhotoResponse } from '@/types'
+import { getFileNameFromUrl } from '@/utils'
 import { Toast, VButton, VLoading } from '@halo-dev/components'
 import type { AttachmentLike } from '@halo-dev/console-shared'
 import { useQuery } from '@tanstack/vue-query'
@@ -13,7 +14,6 @@ import DownloadButton from '../base/DownloadButton.vue'
 import DownloadModeSwitcher from '../base/DownloadModeSwitcher.vue'
 import ImageCard from '../base/ImageCard.vue'
 import ImageLayout from '../base/ImageLayout.vue'
-import { getFileNameFromUrl } from '@/utils'
 
 const props = withDefaults(
   defineProps<{
