@@ -67,8 +67,8 @@ jobs:
         uses: halo-sigs/app-store-release-action@v3
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
-          app-id: app-JxVVb
-          halo-backend-baseurl: https://www.halo.run
+          app-id: "app-JxVVb"
+          halo-backend-baseurl: "https://www.halo.run"
           release-id: ${{ github.event.release.id }}
-          assets-dir: build/libs
+          assets-dir: "build/libs"
           halo-pat: ${{ secrets.HALO_PAT }}
