@@ -73,7 +73,7 @@ tasks.register('generateApiKeysFile') {
     }
 }
 
-tasks.named("processResources").configure {
+tasks.named("jar").configure {
     dependsOn("generateApiKeysFile")
 }
 
