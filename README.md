@@ -17,6 +17,11 @@
 
 > 注意，Unsplash 平台因为审核原因，暂时没有通过生产环境的 API Key 申请，当前内置 API Key 为 Demo 模式，可能会因为请求数超出限制而无法访问，如果遇到这个问题，可以尝试申请自己的 Key。
 
+## 使用
+
+1. 在 [应用市场](https://www.halo.run/store/apps/app-JxVVb) 或 [Releases](https://github.com/halo-sigs/plugin-image-stream/releases) 中下载并安装此插件。
+2. 启动之后，在附件选择弹窗中会添加 Image Stream 选项卡。
+
 ## 声明
 
 此插件所提供的内容来自：
