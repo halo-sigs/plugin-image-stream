@@ -10,12 +10,12 @@
 
 > 此插件基于 [plugin-unsplash](https://github.com/halo-sigs/plugin-unsplash)，主要用于支持更多平台，详情见 <https://github.com/halo-sigs/plugin-unsplash/issues/15>
 
-**此项目正在开发中，不能直接使用，实现目标：**
+## 特性
 
-- 同时支持选择图片和提前转存图片再选择。
-- 由后端代理图片平台的接口。
-- 内置各个平台的 key，且支持自定义 key。
-- 处理权限相关的问题。
+- 支持从 Unsplash、Pixabay、Pexels 选择或者转存图片到本地。
+- 已内置各个平台的 API Key，开箱即用，也可以配置自己申请的 API Key。
+
+> 注意，Unsplash 平台因为审核原因，暂时没有通过生产环境的 API Key 申请，当前内置 API Key 为 Demo 模式，可能会因为请求数超出限制而无法访问，如果遇到这个问题，可以尝试申请自己的 Key。
 
 ## 声明
 
