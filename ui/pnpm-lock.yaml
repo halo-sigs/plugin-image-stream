@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@halo-dev/api-client':
-        specifier: ^2.20.0
-        version: 2.20.0(axios@1.7.7)
+        specifier: https://pkg.pr.new/@halo-dev/api-client@7469
+        version: https://pkg.pr.new/@halo-dev/api-client@7469(axios@1.7.7)
       '@halo-dev/components':
         specifier: ^2.20.0
         version: 2.20.0(vue-router@4.2.4(vue@3.5.12(typescript@5.5.4)))(vue@3.5.12(typescript@5.5.4))
@@ -631,6 +631,12 @@ packages:
 
   '@halo-dev/api-client@2.20.0':
     resolution: {integrity: sha512-da/0cmUat7Iew4Mggc/sjXQmEoO0aSl9JMe0qK72UgeEGcac3M+qJUn0yprEAHtN6EVPrTwAUdTSFzgWrWPytw==}
+    peerDependencies:
+      axios: ^1.7.x
+
+  '@halo-dev/api-client@https://pkg.pr.new/@halo-dev/api-client@7469':
+    resolution: {tarball: https://pkg.pr.new/@halo-dev/api-client@7469}
+    version: 2.21.0
     peerDependencies:
       axios: ^1.7.x
 
@@ -3515,6 +3521,11 @@ snapshots:
       axios: 1.7.7
       qs: 6.13.0
 
+  '@halo-dev/api-client@https://pkg.pr.new/@halo-dev/api-client@7469(axios@1.7.7)':
+    dependencies:
+      axios: 1.7.7
+      qs: 6.13.0
+
   '@halo-dev/components@2.20.0(vue-router@4.2.4(vue@3.5.12(typescript@5.5.4)))(vue@3.5.12(typescript@5.5.4))':
     dependencies:
       floating-vue: 5.2.2(vue@3.5.12(typescript@5.5.4))
@@ -5747,7 +5758,7 @@ snapshots:
       micromatch: 4.0.5
       normalize-path: 3.0.0
       object-hash: 3.0.0
-      picocolors: 1.0.1
+      picocolors: 1.1.1
       postcss: 8.4.47
       postcss-import: 15.1.0(postcss@8.4.47)
       postcss-js: 4.0.1(postcss@8.4.47)

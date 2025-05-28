@@ -18,7 +18,7 @@ jobs:
           cache-dept-path: ui/pnpm-lock.yaml
           skip-node-setup: false
           node-version: 20
-          pnpm-version: 9
+          pnpm-version: 10
           java-version: 17
       - name: Build
         run: |

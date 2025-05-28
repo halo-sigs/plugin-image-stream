@@ -15,25 +15,24 @@ const pluginDetailModal = ref(false)
 
 async function onDownloadModeChange(value: boolean) {
   const basicConfigToUpdate = cloneDeep(basicConfig.value)
+
   set<BasicConfig>(basicConfigToUpdate || {}, 'downloadMode.enable', value)
 
-  const { data: configMap } = await consoleApiClient.plugin.plugin.fetchPluginConfig({
+  const { data: configMapData } = await consoleApiClient.plugin.plugin.fetchPluginJsonConfig({
     name: PLUGIN_NAME
   })
 
-  configMap.data = {
-    ...configMap.data,
-    basic: JSON.stringify(basicConfigToUpdate)
+  const configMapDataToUpdate = {
+    ...configMapData,
+    basic: basicConfigToUpdate
   }
 
-  const { data: updatedConfigMap } = await consoleApiClient.plugin.plugin.updatePluginConfig({
+  await consoleApiClient.plugin.plugin.updatePluginJsonConfig({
     name: PLUGIN_NAME,
-    configMap: configMap
+    body: configMapDataToUpdate
   })
 
-  const updatedBasicConfig = JSON.parse(updatedConfigMap.data?.basic || '{}') as BasicConfig
-
-  if (updatedBasicConfig.downloadMode?.enable && !updatedBasicConfig.downloadMode.policyName) {
+  if (basicConfigToUpdate?.downloadMode?.enable && !basicConfigToUpdate.downloadMode.policyName) {
     Toast.warning('开启转存模式需要配置附件存储策略')
     pluginDetailModal.value = true
   }

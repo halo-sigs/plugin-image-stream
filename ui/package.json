@@ -9,7 +9,7 @@
     "prettier": "prettier --write './src/**/*.{vue,js,jsx,ts,tsx,css,scss,json,yml,yaml,html}'"
   },
   "dependencies": {
-    "@halo-dev/api-client": "^2.20.0",
+    "@halo-dev/api-client": "https://pkg.pr.new/@halo-dev/api-client@7469",
     "@halo-dev/components": "^2.20.0",
     "@halo-dev/console-shared": "^2.20.0",
     "@tanstack/vue-query": "^4.37.1",
@@ -46,5 +46,6 @@
     "vite": "^5.4.10",
     "vitest": "^0.13.1",
     "vue-tsc": "^2.1.10"
-  }
+  },
+  "packageManager": "pnpm@10.11.0+sha512.6540583f41cc5f628eb3d9773ecee802f4f9ef9923cc45b69890fb47991d4b092964694ec3a4f738a420c918a333062c8b925d312f42e4f0c263eb603551f977"
 }
