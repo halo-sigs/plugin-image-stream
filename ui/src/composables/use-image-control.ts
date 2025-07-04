@@ -3,7 +3,8 @@ import { consoleApiClient, coreApiClient, type Attachment } from '@halo-dev/api-
 import { Toast } from '@halo-dev/components'
 import type { AttachmentLike } from '@halo-dev/console-shared'
 import { useMutation, useQuery } from '@tanstack/vue-query'
-import { chunk, set, uniq } from 'lodash-es'
+import { chunk, uniq } from 'es-toolkit'
+import { set } from 'es-toolkit/compat'
 import { computed, ref, watch, type Ref } from 'vue'
 import { useConfig } from './use-config'
 

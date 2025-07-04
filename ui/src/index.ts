@@ -1,5 +1,6 @@
 import { consoleApiClient } from '@halo-dev/api-client'
 import { definePlugin } from '@halo-dev/console-shared'
+import 'uno.css'
 import { markRaw } from 'vue'
 import ImageStreamProvider from './components/ImageStreamProvider.vue'
 

@@ -4,7 +4,8 @@ import { PLUGIN_NAME } from '@/constants'
 import { consoleApiClient } from '@halo-dev/api-client'
 import { Toast } from '@halo-dev/components'
 import { useQueryClient } from '@tanstack/vue-query'
-import { cloneDeep, set } from 'lodash-es'
+import { cloneDeep } from 'es-toolkit'
+import { set } from 'es-toolkit/compat'
 import { ref } from 'vue'
 
 const queryClient = useQueryClient()
@@ -51,7 +52,7 @@ function onPluginDetailModalClose() {
     type="checkbox"
     label="转存模式"
     :model-value="basicConfig?.downloadMode?.enable"
-    :classes="{ outer: '!p-0 flex-none', wrapper: 'image-stream-checkbox-wrapper' }"
+    :classes="{ outer: ':uno: !p-0 flex-none', wrapper: 'image-stream-checkbox-wrapper' }"
     @input="onDownloadModeChange"
   />
 

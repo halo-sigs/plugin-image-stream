@@ -6,7 +6,7 @@ withDefaults(defineProps<{ loading: boolean }>(), { loading: false })
 <template>
   <VButton :loading="loading" size="sm" type="secondary">
     <template #icon>
-      <IconUpload class="size-full" />
+      <IconUpload class=":uno: size-full" />
     </template>
     转存已选择的图片
   </VButton>

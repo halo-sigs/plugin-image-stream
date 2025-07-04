@@ -39,25 +39,25 @@ watch(
 </script>
 
 <template>
-  <ul class="flex gap-3">
+  <ul class=":uno: flex gap-3">
     <li
       v-for="source in SOURCES"
       :key="source.id"
-      class="flex cursor-pointer items-center gap-2 rounded-lg p-2 ring-1 ring-gray-200 transition-all hover:shadow-md"
-      :class="{ '!ring-gray-300 shadow': selectedSourceId === source.id }"
+      class=":uno: flex cursor-pointer items-center gap-2 rounded-lg p-2 ring-1 ring-gray-200 transition-all hover:shadow-md"
+      :class="{ ':uno: !ring-gray-300 shadow': selectedSourceId === source.id }"
       @click="selectedSourceId = source.id"
     >
-      <img :src="source.logo" class="size-8" />
+      <img :src="source.logo" class=":uno: size-8" />
       <div
-        class="text-gray-600 font-semibold"
-        :class="{ '!text-gray-900': selectedSourceId === source.id }"
+        class=":uno: text-gray-600 font-semibold"
+        :class="{ ':uno: !text-gray-900': selectedSourceId === source.id }"
       >
         {{ source.label }}
       </div>
     </li>
   </ul>
 
-  <div class="mt-4">
+  <div class=":uno: mt-4">
     <component :is="selectedSource?.component" v-bind="$props" @update:selected="onSelected" />
   </div>
 </template>

@@ -1,51 +1,51 @@
 {
   "type": "module",
   "scripts": {
-    "dev": "vite build --watch --mode=development",
-    "build": "vite build",
-    "test:unit": "vitest --environment jsdom",
+    "build": "rsbuild build",
+    "dev": "rsbuild build --watch --env-mode=development",
     "type-check": "vue-tsc --build --force",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
     "prettier": "prettier --write './src/**/*.{vue,js,jsx,ts,tsx,css,scss,json,yml,yaml,html}'"
   },
   "dependencies": {
-    "@halo-dev/api-client": "https://pkg.pr.new/@halo-dev/api-client@7469",
-    "@halo-dev/components": "^2.20.0",
-    "@halo-dev/console-shared": "^2.20.0",
-    "@tanstack/vue-query": "^4.37.1",
-    "axios": "^1.7.7",
-    "lodash-es": "^4.17.21",
+    "@halo-dev/api-client": "^2.21.0",
+    "@halo-dev/components": "^2.21.0",
+    "@halo-dev/console-shared": "^2.21.0",
+    "@tanstack/vue-query": "^4.40.0",
+    "axios": "^1.10.0",
+    "es-toolkit": "^1.39.6",
     "pexels": "^1.4.0",
     "unsplash-js": "^7.0.19",
-    "vue": "^3.5.12"
+    "vue": "^3.5.17"
+  },
+  "prettier": {
+    "plugins": [
+      "prettier-plugin-organize-imports"
+    ],
+    "semi": false,
+    "tabWidth": 2,
+    "singleQuote": true,
+    "printWidth": 100,
+    "trailingComma": "none"
   },
   "devDependencies": {
-    "@halo-dev/ui-plugin-bundler-kit": "^2.20.0",
-    "@rushstack/eslint-patch": "^1.10.4",
-    "@tailwindcss/aspect-ratio": "^0.4.2",
-    "@tsconfig/node20": "^20.1.4",
-    "@types/jsdom": "^16.2.15",
-    "@types/lodash-es": "^4.17.12",
-    "@types/node": "^16.18.119",
-    "@unocss/eslint-config": "^0.61.9",
-    "@vitejs/plugin-vue": "^5.1.4",
-    "@vue/eslint-config-prettier": "^7.1.0",
-    "@vue/eslint-config-typescript": "^10.0.0",
-    "@vue/test-utils": "^2.4.6",
+    "@halo-dev/ui-plugin-bundler-kit": "^2.21.1",
+    "@rsbuild/core": "^1.4.3",
+    "@rushstack/eslint-patch": "^1.12.0",
+    "@tsconfig/node20": "^20.1.6",
+    "@types/node": "^16.18.126",
+    "@unocss/eslint-config": "^66.3.2",
+    "@unocss/webpack": "^66.3.2",
+    "@vue/eslint-config-prettier": "^9.0.0",
+    "@vue/eslint-config-typescript": "^11.0.3",
     "@vue/tsconfig": "^0.5.1",
-    "autoprefixer": "^10.4.20",
     "eslint": "^8.57.1",
     "eslint-plugin-vue": "^8.7.1",
-    "jsdom": "^19.0.0",
-    "npm-run-all": "^4.1.5",
-    "postcss": "^8.4.47",
-    "prettier": "^3.3.3",
+    "prettier": "^3.6.2",
     "prettier-plugin-organize-imports": "^4.1.0",
     "typescript": "~5.5.4",
-    "unocss": "^0.61.9",
-    "vite": "^5.4.10",
-    "vitest": "^0.13.1",
-    "vue-tsc": "^2.1.10"
+    "unocss": "^66.3.2",
+    "vue-tsc": "^2.2.12"
   },
-  "packageManager": "pnpm@10.11.0+sha512.6540583f41cc5f628eb3d9773ecee802f4f9ef9923cc45b69890fb47991d4b092964694ec3a4f738a420c918a333062c8b925d312f42e4f0c263eb603551f977"
+  "packageManager": "pnpm@10.12.4"
 }

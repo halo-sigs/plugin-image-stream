@@ -252,8 +252,8 @@ watch(
 )
 </script>
 <template>
-  <div class="mb-4 flex flex-wrap items-center justify-between gap-4">
-    <div class="flex flex-wrap items-center gap-3">
+  <div class=":uno: mb-4 flex flex-wrap items-center justify-between gap-4">
+    <div class=":uno: flex flex-wrap items-center gap-3">
       <SearchInput v-model="keyword" />
       <FilterDropdown v-model="selectedImageType" label="图像类型" :items="IMAGE_TYPES" />
       <FilterDropdown v-model="selectedCategory" label="类别" :items="CATEGORIES" />
@@ -261,7 +261,7 @@ watch(
     </div>
 
     <HasPermission :permissions="['system:attachments:manage']">
-      <div class="flex flex-none items-center gap-2">
+      <div class=":uno: flex flex-none items-center gap-2">
         <DownloadButton
           v-if="isDownloadMode && selectedImages.size"
           :loading="downloading"
@@ -292,7 +292,7 @@ watch(
       />
     </ImageLayout>
 
-    <div v-if="images.length" class="mt-4 flex items-center justify-center">
+    <div v-if="images.length" class=":uno: mt-4 flex items-center justify-center">
       <VButton :loading="isFetching" type="secondary" @click="page++">
         {{ isFetching ? '加载中...' : '加载更多' }}
       </VButton>
