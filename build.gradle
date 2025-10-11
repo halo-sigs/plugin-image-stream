@@ -78,7 +78,8 @@ tasks.named("jar").configure {
 }
 
 halo {
-    version = "2.21"
+    imageName = "halohub/halo-dev"
+    version = "main"
 }
 
 haloPlugin {

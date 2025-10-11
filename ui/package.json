@@ -8,15 +8,15 @@
     "prettier": "prettier --write './src/**/*.{vue,js,jsx,ts,tsx,css,scss,json,yml,yaml,html}'"
   },
   "dependencies": {
-    "@halo-dev/api-client": "^2.21.0",
+    "@halo-dev/api-client": "^2.21.1",
     "@halo-dev/components": "^2.21.0",
     "@halo-dev/console-shared": "^2.21.0",
-    "@tanstack/vue-query": "^4.40.0",
-    "axios": "^1.10.0",
-    "es-toolkit": "^1.39.6",
+    "@tanstack/vue-query": "^4.41.0",
+    "axios": "^1.12.2",
+    "es-toolkit": "^1.40.0",
     "pexels": "^1.4.0",
-    "unsplash-js": "^7.0.19",
-    "vue": "^3.5.17"
+    "unsplash-js": "^7.0.20",
+    "vue": "^3.5.22"
   },
   "prettier": {
     "plugins": [
@@ -29,23 +29,23 @@
     "trailingComma": "none"
   },
   "devDependencies": {
-    "@halo-dev/ui-plugin-bundler-kit": "^2.21.1",
-    "@rsbuild/core": "^1.4.3",
-    "@rushstack/eslint-patch": "^1.12.0",
+    "@halo-dev/ui-plugin-bundler-kit": "^2.21.2",
+    "@rsbuild/core": "^1.5.16",
+    "@rushstack/eslint-patch": "^1.13.0",
     "@tsconfig/node20": "^20.1.6",
     "@types/node": "^16.18.126",
-    "@unocss/eslint-config": "^66.3.2",
-    "@unocss/webpack": "^66.3.2",
+    "@unocss/eslint-config": "^66.5.3",
+    "@unocss/webpack": "^66.5.3",
     "@vue/eslint-config-prettier": "^9.0.0",
     "@vue/eslint-config-typescript": "^11.0.3",
     "@vue/tsconfig": "^0.5.1",
     "eslint": "^8.57.1",
     "eslint-plugin-vue": "^8.7.1",
     "prettier": "^3.6.2",
-    "prettier-plugin-organize-imports": "^4.1.0",
+    "prettier-plugin-organize-imports": "^4.3.0",
     "typescript": "~5.5.4",
-    "unocss": "^66.3.2",
+    "unocss": "^66.5.3",
     "vue-tsc": "^2.2.12"
   },
-  "packageManager": "pnpm@10.12.4"
+  "packageManager": "pnpm@10.18.2"
 }
