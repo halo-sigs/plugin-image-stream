@@ -139,7 +139,7 @@ const {
   'unsplash',
   images,
   (image) => image.id,
-  (image) => image.urls.raw,
+  (image) => image.urls.full,
   (image) => image.alt_description || '',
   (image) => {
     return `${image.alt_description?.toLowerCase().replace(/\s+/g, '-') || image.id}.jpg`

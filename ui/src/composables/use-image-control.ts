@@ -1,4 +1,5 @@
 import { BINDING_LABEL_KEY, type SOURCE_IDS } from '@/constants'
+import { compressImage } from '@/utils/image'
 import { consoleApiClient, coreApiClient, type Attachment } from '@halo-dev/api-client'
 import { Toast } from '@halo-dev/components'
 import type { AttachmentLike } from '@halo-dev/console-shared'
@@ -170,9 +171,19 @@ export function useImageControl<T>(
       const imageResponse = await fetch(url)
 
       const imageBlob = await imageResponse.blob()
+      let imageFile = new File([imageBlob], fileName, { type: imageBlob.type })
+
+      if (basicConfig.value?.downloadMode?.enableCompress) {
+        imageFile = await compressImage(
+          imageFile,
+          fileName,
+          Number(basicConfig.value.downloadMode.compressQuality || 0.6),
+          Number(basicConfig.value.downloadMode.compressMaxWidth || 1920)
+        )
+      }
 
       const { data: newAttachment } = await consoleApiClient.storage.attachment.uploadAttachment({
-        file: new File([imageBlob], fileName, { type: imageBlob.type }),
+        file: imageFile,
         policyName: policyName as string,
         groupName: groupName
       })

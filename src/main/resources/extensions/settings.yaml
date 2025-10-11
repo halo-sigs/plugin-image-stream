@@ -15,6 +15,9 @@ spec:
           value:
             enable: false
             urlType: raw
+            enableCompress: true
+            compressQuality: 0.8
+            compressMaxWidth: 1920
           children:
             - $formkit: checkbox
               name: enable
@@ -44,6 +47,34 @@ spec:
               requestOption:
                 labelField: "spec.displayName"
                 valueField: "metadata.name"
+            - $formkit: checkbox
+              if: "$value.enable"
+              name: enableCompress
+              id: enableCompress
+              key: enableCompress
+              label: 启用图片压缩
+              help: 启用后，图片会在上传前进行压缩，节省存储空间和带宽
+            - $formkit: number
+              if: "$value.enable && $get(enableCompress).value"
+              name: compressQuality
+              id: compressQuality
+              key: compressQuality
+              label: 压缩质量
+              help: 数值越小，图片质量越差，体积越小。建议设置在 0.4 - 0.8 之间。
+              value: 0.8
+              min: 0
+              max: 1
+              step: 0.1
+              validation: "required|between:0,1"
+            - $formkit: number
+              if: "$value.enable && $get(enableCompress).value"
+              name: compressMaxWidth
+              id: compressMaxWidth
+              key: compressMaxWidth
+              label: 图片最大宽度
+              help: 可用于降低图片像素，减小图片体积，通常建议设置在 1920 以内。
+              value: 1920
+              validation: "required"
         - $formkit: group
           label: Unsplash
           name: unsplash

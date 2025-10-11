@@ -8,6 +8,9 @@ export interface BasicConfig {
     enable?: boolean
     policyName?: string
     groupName?: string
+    enableCompress?: boolean
+    compressQuality?: number
+    compressMaxWidth?: number
     urlType: 'raw' | 'full' | 'regular' | 'small'
   }
 }
