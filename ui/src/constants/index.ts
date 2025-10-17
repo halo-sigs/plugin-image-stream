@@ -6,6 +6,7 @@ import { defineAsyncComponent } from 'vue'
 
 export const PLUGIN_NAME = 'image-stream'
 export const DEFAULT_PER_PAGE = 48
+export const UNSPLASH_DEFAULT_PER_PAGE = 30
 
 export const SOURCES = [
   {

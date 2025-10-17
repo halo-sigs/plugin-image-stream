@@ -2,7 +2,7 @@
 import { UnsplashV1alpha1Api } from '@/api/generated'
 import { useConfig } from '@/composables/use-config'
 import { useImageControl } from '@/composables/use-image-control'
-import { DEFAULT_PER_PAGE } from '@/constants'
+import { UNSPLASH_DEFAULT_PER_PAGE } from '@/constants'
 import { Toast, VButton, VLoading } from '@halo-dev/components'
 import type { AttachmentLike } from '@halo-dev/console-shared'
 import { useQuery } from '@tanstack/vue-query'
@@ -92,7 +92,7 @@ const { isFetching } = useQuery({
     if (keyword.value) {
       const { data } = await unsplashApiClient.searchUnsplashPhotos({
         page: page.value,
-        perPage: DEFAULT_PER_PAGE,
+        perPage: UNSPLASH_DEFAULT_PER_PAGE,
         query: keyword.value
       })
 
@@ -106,7 +106,7 @@ const { isFetching } = useQuery({
     const { data } = await unsplashApiClient.getUnsplashTopicPhotos({
       idOrSlug: selectedTopicId.value,
       page: page.value,
-      perPage: DEFAULT_PER_PAGE
+      perPage: UNSPLASH_DEFAULT_PER_PAGE
     })
 
     return (data as Photo[]) || []
