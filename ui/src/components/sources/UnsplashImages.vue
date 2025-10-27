@@ -149,6 +149,9 @@ const {
       id: image.id
     })
   },
+  (image) => {
+    return `Photo by <a href="https://unsplash.com/@${image.user.username}?utm_source=Halo&utm_medium=referral">${image.user.name}</a> on <a href="https://unsplash.com/?utm_source=Halo&utm_medium=referral">Unsplash</a>`
+  },
   props.max
 )
 

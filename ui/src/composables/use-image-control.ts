@@ -17,6 +17,7 @@ export function useImageControl<T>(
   altHandler: (image: T) => string,
   fileNameHandler: (image: T) => string,
   afterDownloadHandler?: (image: T) => Promise<void>,
+  captionHandler?: (image: T) => string | undefined,
   max?: number
 ) {
   const selectedImages = ref<Set<T>>(new Set()) as Ref<Set<T>>
@@ -42,7 +43,9 @@ export function useImageControl<T>(
           if (bindAttachment) {
             finalSelectedUrls.value.add({
               url: bindAttachment.status?.permalink || '',
-              type: bindAttachment.spec.displayName || ''
+              alt: bindAttachment.spec.displayName || '',
+              mediaType: bindAttachment.spec.mediaType || 'image/*',
+              caption: captionHandler?.(image)
             })
           }
         }
@@ -51,7 +54,9 @@ export function useImageControl<T>(
       for (const image of value) {
         finalSelectedUrls.value.add({
           url: urlHandler(image),
-          type: altHandler(image)
+          alt: altHandler(image),
+          mediaType: 'image/*',
+          caption: captionHandler?.(image)
         })
       }
     },
@@ -197,7 +202,9 @@ export function useImageControl<T>(
 
       finalSelectedUrls.value.add({
         url: permalink || '',
-        type: newAttachment.spec.displayName || ''
+        alt: newAttachment.spec.displayName || '',
+        mediaType: newAttachment.spec.mediaType || 'image/*',
+        caption: captionHandler?.(image)
       })
 
       await refetchAttachments()

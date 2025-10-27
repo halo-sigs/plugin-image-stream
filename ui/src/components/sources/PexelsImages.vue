@@ -100,6 +100,7 @@ const {
   (image) => image.alt,
   (image) => getFileNameFromUrl(image.src.original) || `${image.id}.jpg`,
   undefined,
+  undefined,
   props.max
 )
 
