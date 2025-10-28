@@ -230,17 +230,15 @@ const {
   downloading,
   handleDownloadImage,
   handleSelect
-} = useImageControl<PixabayHit>(
-  'pixabay',
-  images,
-  (image) => image.id + '',
-  (image) => image.largeImageURL,
-  (image) => image.tags,
-  (image) => getFileNameFromUrl(image.previewURL) || `${image.id}.jpg`,
-  undefined,
-  undefined,
-  props.max
-)
+} = useImageControl<PixabayHit>('pixabay', images, {
+  idHandler: (image) => image.id + '',
+  urlHandler: (image) => image.largeImageURL,
+  altHandler: (image) => image.tags,
+  fileNameHandler: (image) => getFileNameFromUrl(image.previewURL) || `${image.id}.jpg`,
+  afterDownloadHandler: undefined,
+  captionHandler: undefined,
+  max: props.max
+})
 
 watch(
   () => finalSelectedUrls.value,

@@ -135,25 +135,23 @@ const {
   downloading,
   handleDownloadImage,
   handleSelect
-} = useImageControl<Photo>(
-  'unsplash',
-  images,
-  (image) => image.id,
-  (image) => image.urls.full,
-  (image) => image.alt_description || '',
-  (image) => {
+} = useImageControl<Photo>('unsplash', images, {
+  idHandler: (image) => image.id,
+  urlHandler: (image) => image.urls.full,
+  altHandler: (image) => image.alt_description || '',
+  fileNameHandler: (image) => {
     return `${image.alt_description?.toLowerCase().replace(/\s+/g, '-') || image.id}.jpg`
   },
-  async (image) => {
+  afterDownloadHandler: async (image) => {
     await unsplashApiClient.trackUnsplashPhotoDownload({
       id: image.id
     })
   },
-  (image) => {
+  captionHandler: (image) => {
     return `Photo by <a href="https://unsplash.com/@${image.user.username}?utm_source=Halo&utm_medium=referral">${image.user.name}</a> on <a href="https://unsplash.com/?utm_source=Halo&utm_medium=referral">Unsplash</a>`
   },
-  props.max
-)
+  max: props.max
+})
 
 watch(
   () => finalSelectedUrls.value,

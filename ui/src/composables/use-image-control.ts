@@ -12,14 +12,26 @@ import { useConfig } from './use-config'
 export function useImageControl<T>(
   source: SOURCE_IDS,
   images: Ref<T[]>,
-  idHandler: (image: T) => string,
-  urlHandler: (image: T) => string,
-  altHandler: (image: T) => string,
-  fileNameHandler: (image: T) => string,
-  afterDownloadHandler?: (image: T) => Promise<void>,
-  captionHandler?: (image: T) => string | undefined,
-  max?: number
+  options: {
+    idHandler: (image: T) => string
+    urlHandler: (image: T) => string
+    altHandler: (image: T) => string
+    fileNameHandler: (image: T) => string
+    afterDownloadHandler?: (image: T) => Promise<void>
+    captionHandler?: (image: T) => string | undefined
+    max?: number
+  }
 ) {
+  const {
+    idHandler,
+    urlHandler,
+    altHandler,
+    fileNameHandler,
+    afterDownloadHandler,
+    captionHandler,
+    max
+  } = options
+
   const selectedImages = ref<Set<T>>(new Set()) as Ref<Set<T>>
   const finalSelectedUrls = ref<Set<AttachmentLike>>(new Set())
 

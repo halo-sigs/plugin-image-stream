@@ -92,17 +92,15 @@ const {
   downloading,
   handleDownloadImage,
   handleSelect
-} = useImageControl<PexelsPhoto>(
-  'pexels',
-  images,
-  (image) => image.id + '',
-  (image) => image.src.original,
-  (image) => image.alt,
-  (image) => getFileNameFromUrl(image.src.original) || `${image.id}.jpg`,
-  undefined,
-  undefined,
-  props.max
-)
+} = useImageControl<PexelsPhoto>('pexels', images, {
+  idHandler: (image) => image.id + '',
+  urlHandler: (image) => image.src.original,
+  altHandler: (image) => image.alt,
+  fileNameHandler: (image) => getFileNameFromUrl(image.src.original) || `${image.id}.jpg`,
+  afterDownloadHandler: undefined,
+  captionHandler: undefined,
+  max: props.max
+})
 
 watch(
   () => finalSelectedUrls.value,
