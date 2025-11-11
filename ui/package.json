@@ -10,7 +10,7 @@
   "dependencies": {
     "@halo-dev/api-client": "^2.21.1",
     "@halo-dev/components": "^2.21.0",
-    "@halo-dev/console-shared": "https://pkg.pr.new/@halo-dev/console-shared@714cddd",
+    "@halo-dev/ui-shared": "https://pkg.pr.new/@halo-dev/ui-shared@ac88ee7",
     "@tanstack/vue-query": "^4.41.0",
     "axios": "^1.12.2",
     "compressorjs": "^1.2.1",
