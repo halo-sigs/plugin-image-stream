@@ -12,7 +12,6 @@ export function compressImage(
       maxWidth,
       success: (compressedFile) => {
         if (compressedFile instanceof File) {
-          console.log('?', compressedFile.size / 1024 / 1024, 'MB')
           return resolve(compressedFile)
         } else {
           return resolve(
