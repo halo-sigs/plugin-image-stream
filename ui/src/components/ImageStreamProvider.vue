@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { SOURCES } from '@/constants'
-import type { AttachmentLike } from '@halo-dev/console-shared'
+import type { AttachmentLike } from '@halo-dev/ui-shared'
 import { computed, ref, watch } from 'vue'
 
 withDefaults(

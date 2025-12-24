@@ -6,7 +6,7 @@ import { DEFAULT_PER_PAGE } from '@/constants'
 import type { PexelsPhoto, PexelsPhotoResponse } from '@/types'
 import { getFileNameFromUrl } from '@/utils'
 import { Toast, VButton, VLoading } from '@halo-dev/components'
-import type { AttachmentLike } from '@halo-dev/console-shared'
+import type { AttachmentLike } from '@halo-dev/ui-shared'
 import { useQuery } from '@tanstack/vue-query'
 import axios, { AxiosError } from 'axios'
 import { ref, watch } from 'vue'
@@ -92,16 +92,15 @@ const {
   downloading,
   handleDownloadImage,
   handleSelect
-} = useImageControl<PexelsPhoto>(
-  'pexels',
-  images,
-  (image) => image.id + '',
-  (image) => image.src.original,
-  (image) => image.alt,
-  (image) => getFileNameFromUrl(image.src.original) || `${image.id}.jpg`,
-  undefined,
-  props.max
-)
+} = useImageControl<PexelsPhoto>('pexels', images, {
+  idHandler: (image) => image.id + '',
+  urlHandler: (image) => image.src.original,
+  altHandler: (image) => image.alt,
+  fileNameHandler: (image) => getFileNameFromUrl(image.src.original) || `${image.id}.jpg`,
+  afterDownloadHandler: undefined,
+  captionHandler: undefined,
+  max: props.max
+})
 
 watch(
   () => finalSelectedUrls.value,

@@ -4,7 +4,7 @@ import { useConfig } from '@/composables/use-config'
 import { useImageControl } from '@/composables/use-image-control'
 import { UNSPLASH_DEFAULT_PER_PAGE } from '@/constants'
 import { Toast, VButton, VLoading } from '@halo-dev/components'
-import type { AttachmentLike } from '@halo-dev/console-shared'
+import type { AttachmentLike } from '@halo-dev/ui-shared'
 import { useQuery } from '@tanstack/vue-query'
 import axios, { AxiosError } from 'axios'
 import type { Basic as Photo } from 'unsplash-js/dist/methods/photos/types'
@@ -135,22 +135,23 @@ const {
   downloading,
   handleDownloadImage,
   handleSelect
-} = useImageControl<Photo>(
-  'unsplash',
-  images,
-  (image) => image.id,
-  (image) => image.urls.full,
-  (image) => image.alt_description || '',
-  (image) => {
+} = useImageControl<Photo>('unsplash', images, {
+  idHandler: (image) => image.id,
+  urlHandler: (image) => image.urls.full,
+  altHandler: (image) => image.alt_description || '',
+  fileNameHandler: (image) => {
     return `${image.alt_description?.toLowerCase().replace(/\s+/g, '-') || image.id}.jpg`
   },
-  async (image) => {
+  afterDownloadHandler: async (image) => {
     await unsplashApiClient.trackUnsplashPhotoDownload({
       id: image.id
     })
   },
-  props.max
-)
+  captionHandler: (image) => {
+    return `Photo by <a href="https://unsplash.com/@${image.user.username}?utm_source=Halo&utm_medium=referral">${image.user.name}</a> on <a href="https://unsplash.com/?utm_source=Halo&utm_medium=referral">Unsplash</a>`
+  },
+  max: props.max
+})
 
 watch(
   () => finalSelectedUrls.value,

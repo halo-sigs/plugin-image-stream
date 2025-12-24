@@ -1,5 +1,4 @@
-import { consoleApiClient } from '@halo-dev/api-client'
-import { definePlugin } from '@halo-dev/console-shared'
+import { definePlugin, utils } from '@halo-dev/ui-shared'
 import 'uno.css'
 import { markRaw } from 'vue'
 import ImageStreamProvider from './components/ImageStreamProvider.vue'
@@ -9,14 +8,7 @@ export default definePlugin({
   routes: [],
   extensionPoints: {
     'attachment:selector:create': async () => {
-      const { data } = await consoleApiClient.user.getPermissions({
-        name: '-'
-      })
-
-      if (
-        data.uiPermissions.includes('*') ||
-        data.uiPermissions.includes('system:attachments:view')
-      ) {
+      if (utils.permission.has(['*', 'system:attachments:view'])) {
         return [
           {
             id: 'image-stream',
