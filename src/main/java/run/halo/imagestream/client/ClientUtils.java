@@ -14,7 +14,8 @@ public class ClientUtils {
 
     public static Mono<ServerResponse> responseExtractor(ClientResponse clientResponse) {
         var serverResponseBuilder = ServerResponse.status(clientResponse.statusCode())
-            .headers(headers -> headers.addAll(clientResponse.headers().asHttpHeaders()));
+            .headers(headers -> clientResponse.headers().asHttpHeaders()
+                .forEach((name, values) -> headers.put(name, values)));
         return clientResponse.bodyToMono(String.class)
             .flatMap(ClientUtils::parseJsonNode)
             .flatMap(serverResponseBuilder::bodyValue)

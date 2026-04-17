@@ -1,5 +1,6 @@
 package run.halo.imagestream.client;
 
+import jakarta.annotation.PostConstruct;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
@@ -12,6 +13,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
+import org.springframework.web.reactive.function.client.ExchangeStrategies;
 import org.springframework.web.reactive.function.client.WebClient;
 import run.halo.app.extension.ExtensionClient;
 import run.halo.app.extension.Secret;
@@ -28,6 +30,11 @@ public class WebClientFactoryImpl implements WebClientFactory, DisposableBean {
 
     private final ProvidedApiKeysLoader providedApiKeysLoader;
     private final ExtensionClient client;
+
+    @PostConstruct
+    void init() {
+        createClients(new BasicProp());
+    }
 
     @Override
     public WebClient getWebClient(WebClientType clientType) {
@@ -88,7 +95,11 @@ public class WebClientFactoryImpl implements WebClientFactory, DisposableBean {
     }
 
     private WebClient createClient(String baseUrl, String authorizationValue) {
+        var strategies = ExchangeStrategies.builder()
+            .codecs(configurer -> configurer.defaultCodecs().maxInMemorySize(2 * 1024 * 1024))
+            .build();
         var builder = WebClient.builder().baseUrl(baseUrl)
+            .exchangeStrategies(strategies)
             .defaultHeader(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE);
         if (StringUtils.isNotBlank(authorizationValue)) {
             builder.defaultHeader(HttpHeaders.AUTHORIZATION, authorizationValue);

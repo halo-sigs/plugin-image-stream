@@ -1,12 +1,12 @@
 plugins {
     id "com.github.node-gradle.node" version "7.0.2"
-    id "run.halo.plugin.devtools" version "0.1.1"
-    id "io.freefair.lombok" version "8.0.1"
+    id "run.halo.plugin.devtools" version "0.6.2"
+    id "io.freefair.lombok" version "8.11"
     id 'java'
 }
 
 group 'run.halo.unsplash'
-sourceCompatibility = JavaVersion.VERSION_17
+sourceCompatibility = JavaVersion.VERSION_21
 
 repositories {
     mavenCentral()
@@ -17,7 +17,7 @@ repositories {
 
 dependencies {
 
-    implementation platform('run.halo.tools.platform:plugin:2.18.0-SNAPSHOT')
+    implementation platform('run.halo.tools.platform:plugin:2.23.1')
     compileOnly 'run.halo.app:api'
 
     testImplementation 'run.halo.app:api'
