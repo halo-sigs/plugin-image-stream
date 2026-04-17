@@ -20,6 +20,22 @@
 1. 在 [应用市场](https://www.halo.run/store/apps/app-JxVVb) 或 [Releases](https://github.com/halo-sigs/plugin-image-stream/releases) 中下载并安装此插件。
 2. 启动之后，在附件选择弹窗中会添加 Image Stream 选项卡。
 
+## 配置 API Key
+
+插件已内置各平台的 API Key，开箱即用。如果内置 Key 失效或需要使用自己的 Key，可按以下步骤配置：
+
+1. 进入 Halo 后台 -> 插件 -> Image Stream -> 设置
+2. 在对应平台的 Access Key / API Key 栏点击 Secret 输入框，创建一个新的 Secret
+3. 填写 Key 和 Value：
+
+| 平台 | Key | Value | 申请地址 |
+|------|-----|-------|---------|
+| Unsplash | `unsplashApiKey` | 你的 Access Key | https://unsplash.com/developers |
+| Pexels | `pexelsApiKey` | 你的 API Key | https://www.pexels.com/api |
+| Pixabay | `pixabayApiKey` | 你的 API Key | https://pixabay.com/zh/service/about/api |
+
+4. 保存设置即可生效
+
 ## 声明
 
 此插件所提供的内容来自：
