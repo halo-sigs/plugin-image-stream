@@ -19,7 +19,7 @@ jobs:
           skip-node-setup: false
           node-version: 20
           pnpm-version: 10
-          java-version: 17
+          java-version: 21
       - name: Build
         run: |
           version=${{ github.event.release.tag_name }}
