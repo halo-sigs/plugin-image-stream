@@ -3,5 +3,5 @@ pluginManagement {
         gradlePluginPortal()
     }
 }
-rootProject.name = 'plugin-unsplash'
+rootProject.name = 'plugin-image-stream'
 
