@@ -162,7 +162,7 @@ export function useImageControl<T>(
 
       try {
         await downloadSingleImage(image)
-      } catch (error) {
+      } catch {
         hasError = true
         Toast.error(`图片 ${altHandler(image)} 下载失败`)
       }

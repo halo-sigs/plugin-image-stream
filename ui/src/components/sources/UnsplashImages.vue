@@ -63,7 +63,7 @@ const { data: topics } = useQuery<Topic[] | undefined>({
   retry: 0,
   onSuccess(data) {
     if (data?.length) {
-      selectedTopicId.value = data[0].id
+      selectedTopicId.value = data[0]?.id
     }
   },
   onError(e) {

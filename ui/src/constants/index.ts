@@ -36,7 +36,7 @@ export const SOURCES = [
       loadingComponent: VLoading
     })
   }
-]
+] as const
 
 export type SOURCE_IDS = 'unsplash' | 'pixabay' | 'pexels'
 

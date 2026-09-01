@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { SOURCES } from '@/constants'
+import { SOURCES, type SOURCE_IDS } from '@/constants'
 import type { AttachmentLike } from '@halo-dev/ui-shared'
 import { computed, ref, watch } from 'vue'
 
@@ -20,7 +20,7 @@ const emit = defineEmits<{
   (event: 'update:selected', attachments: AttachmentLike[]): void
 }>()
 
-const selectedSourceId = ref(SOURCES[0].id)
+const selectedSourceId = ref<SOURCE_IDS>('unsplash')
 
 const selectedSource = computed(() =>
   SOURCES.find((source) => source.id === selectedSourceId.value)

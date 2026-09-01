@@ -1,27 +1,22 @@
 plugins {
-    id "com.github.node-gradle.node" version "7.0.2"
-    id "run.halo.plugin.devtools" version "0.6.2"
-    id "io.freefair.lombok" version "8.11"
     id 'java'
+    id "io.freefair.lombok" version "9.2.0"
+    id "run.halo.plugin.devtools" version "0.8.0"
 }
 
 group 'run.halo.imagestream'
-sourceCompatibility = JavaVersion.VERSION_21
 
 repositories {
     mavenCentral()
-    maven { url 'https://s01.oss.sonatype.org/content/repositories/releases' }
-    maven { url 'https://s01.oss.sonatype.org/content/repositories/snapshots/' }
-    maven { url 'https://repo.spring.io/milestone' }
 }
 
 dependencies {
-
-    implementation platform('run.halo.tools.platform:plugin:2.23.1')
+    implementation platform('run.halo.tools.platform:plugin:2.26.0')
     compileOnly 'run.halo.app:api'
 
     testImplementation 'run.halo.app:api'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
 test {
@@ -30,26 +25,28 @@ test {
 
 tasks.withType(JavaCompile).configureEach {
     options.encoding = "UTF-8"
+    options.release = 21
 }
 
-node {
-    nodeProjectDir = file("${project.projectDir}/ui")
+tasks.named('processResources') {
+    exclude 'console/**'
 }
 
-tasks.register('buildFrontend', PnpmTask) {
-    args = ['build']
-    dependsOn('installDepsForUI')
-}
-
-tasks.register('installDepsForUI', PnpmTask) {
-    args = ['install']
-}
-
-build {
-    // build frontend before build
-    tasks.named('compileJava').configure {
-        dependsOn('buildFrontend')
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
     }
+}
+
+tasks.register('processUiResources', Copy) {
+    from project(':ui').layout.buildDirectory.dir('dist')
+    into layout.buildDirectory.dir('resources/main/ui')
+    dependsOn project(':ui').tasks.named('assemble')
+    shouldRunAfter tasks.named('processResources')
+}
+
+tasks.named('classes') {
+    dependsOn tasks.named('processUiResources')
 }
 
 tasks.register('generateApiKeysFile') {
@@ -77,9 +74,12 @@ tasks.named("jar").configure {
     dependsOn("generateApiKeysFile")
 }
 
+tasks.named('generatePluginComponentsIdx') {
+    notCompatibleWithConfigurationCache('This task invokes "Task.project" at execution time, which is not supported with configuration cache.')
+}
+
 halo {
-    imageName = "halohub/halo-dev"
-    version = "main"
+    version = '2.26'
 }
 
 haloPlugin {

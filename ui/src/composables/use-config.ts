@@ -32,7 +32,7 @@ export function useConfig() {
         }
       )
 
-      return (configMapData as any)?.basic as BasicConfig
+      return (configMapData as { basic?: BasicConfig })?.basic
     }
   })
 

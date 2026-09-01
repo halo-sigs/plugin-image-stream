@@ -160,9 +160,9 @@ const pixabayApiClient = new PixabayV1alpha1Api(
 
 const images = ref<PixabayHit[]>([])
 const keyword = ref('')
-const selectedImageType = ref(IMAGE_TYPES[0].value)
-const selectedCategory = ref(CATEGORIES[0].value)
-const selectedOrderType = ref(ORDER_TYPES[0].value)
+const selectedImageType = ref('all')
+const selectedCategory = ref<string>()
+const selectedOrderType = ref('popular')
 const page = ref(1)
 
 const { isDownloadMode } = useConfig()
