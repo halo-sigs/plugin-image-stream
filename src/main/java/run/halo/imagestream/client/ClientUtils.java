@@ -22,7 +22,7 @@ public class ClientUtils {
             .switchIfEmpty(serverResponseBuilder.build());
     }
 
-    private static Mono<JsonNode> parseJsonNode(String body) {
+    public static Mono<JsonNode> parseJsonNode(String body) {
         return Mono.fromCallable(() -> {
                 try {
                     return JsonUtils.jsonToObject(body, JsonNode.class);
