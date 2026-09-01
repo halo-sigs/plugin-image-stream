@@ -1,6 +1,7 @@
 package run.halo.imagestream.mcp;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -21,6 +22,7 @@ import run.halo.mcpserver.api.McpToolResult;
 public class ImageStreamMcpToolProvider implements McpToolProvider {
 
     private static final int DEFAULT_SIZE = 20;
+    private static final int MIN_SIZE = 3;
     private static final int MAX_SIZE = 30;
 
     private final WebClientFactory webClientFactory;
@@ -48,7 +50,7 @@ public class ImageStreamMcpToolProvider implements McpToolProvider {
                 "query", Map.of("type", "string", "minLength", 1, "maxLength", 100),
                 "page", Map.of("type", "integer", "minimum", 1, "default", 1),
                 "size", Map.of(
-                    "type", "integer", "minimum", 1, "maximum", MAX_SIZE,
+                    "type", "integer", "minimum", MIN_SIZE, "maximum", MAX_SIZE,
                     "default", DEFAULT_SIZE)), List.of("source", "query")))
             .outputSchema(searchOutputSchema())
             .annotations(new McpToolAnnotations(true, false, true, true, "Search stock images"))
@@ -65,9 +67,10 @@ public class ImageStreamMcpToolProvider implements McpToolProvider {
                 + "the URL that can be passed to Halo's attachment URL transfer tool.")
             .displayTitle("准备 Unsplash 下载")
             .displayDescription("为选中的 Unsplash 图片登记下载，并返回可用于附件转存的链接。")
-            .inputSchema(objectSchema(
-                Map.of("id", Map.of("type", "string", "minLength", 1, "maxLength", 100)),
-                List.of("id")))
+            .inputSchema(objectSchema(Map.of(
+                    "id", Map.of("type", "string", "minLength", 1, "maxLength", 100),
+                    "downloadLocation", Map.of("type", "string", "format", "uri")),
+                List.of("id", "downloadLocation")))
             .outputSchema(objectSchema(Map.of(
                 "source", Map.of("type", "string", "const", "unsplash"),
                 "id", Map.of("type", "string"),
@@ -95,8 +98,10 @@ public class ImageStreamMcpToolProvider implements McpToolProvider {
     private Mono<McpToolResult> prepareUnsplashDownload(McpToolInvocation invocation) {
         return Mono.defer(() -> {
             var id = requiredString(invocation.arguments(), "id");
+            var downloadLocation = unsplashDownloadLocation(
+                requiredString(invocation.arguments(), "downloadLocation"), id);
             return client(WebClientType.UNSPLASH).get()
-                .uri(uriBuilder -> uriBuilder.path("/photos/{id}/download").build(id))
+                .uri(downloadLocation)
                 .retrieve()
                 .bodyToMono(String.class)
                 .flatMap(ClientUtils::parseJsonNode)
@@ -197,6 +202,9 @@ public class ImageStreamMcpToolProvider implements McpToolProvider {
         put(item, "height", integer(node, source == Source.PIXABAY ? "imageHeight" : "height"));
         item.put("previewUrl", previewUrl);
         item.put("imageUrl", imageUrl);
+        if (source == Source.UNSPLASH) {
+            put(item, "downloadLocation", text(node, "links", "download_location"));
+        }
         put(item, "sourceUrl", switch (source) {
             case UNSPLASH -> text(node, "links", "html");
             case PEXELS -> text(node, "url");
@@ -239,6 +247,7 @@ public class ImageStreamMcpToolProvider implements McpToolProvider {
         itemProperties.put("height", Map.of("type", "integer", "minimum", 0));
         itemProperties.put("previewUrl", Map.of("type", "string", "format", "uri"));
         itemProperties.put("imageUrl", Map.of("type", "string", "format", "uri"));
+        itemProperties.put("downloadLocation", Map.of("type", "string", "format", "uri"));
         itemProperties.put("sourceUrl", Map.of("type", "string", "format", "uri"));
         itemProperties.put("author", author);
         itemProperties.put("requiresPreparation", Map.of("type", "boolean"));
@@ -291,10 +300,28 @@ public class ImageStreamMcpToolProvider implements McpToolProvider {
         if (!(value instanceof Number number)
             || number.doubleValue() != number.intValue()
             || number.intValue() < 1
+            || ("size".equals(name) && number.intValue() < MIN_SIZE)
             || ("size".equals(name) && number.intValue() > MAX_SIZE)) {
             throw invalid(name + " is outside the supported range");
         }
         return number.intValue();
+    }
+
+    private static URI unsplashDownloadLocation(String value, String id) {
+        try {
+            var uri = URI.create(value);
+            if (!"https".equalsIgnoreCase(uri.getScheme())
+                || !"api.unsplash.com".equalsIgnoreCase(uri.getHost())
+                || uri.getPort() != -1
+                || uri.getUserInfo() != null
+                || uri.getFragment() != null
+                || !("/photos/" + id + "/download").equals(uri.getPath())) {
+                throw invalid("downloadLocation must match the selected Unsplash photo");
+            }
+            return uri;
+        } catch (IllegalArgumentException error) {
+            throw invalid("downloadLocation must be a valid Unsplash download URL");
+        }
     }
 
     private static Integer integer(JsonNode node, String field) {

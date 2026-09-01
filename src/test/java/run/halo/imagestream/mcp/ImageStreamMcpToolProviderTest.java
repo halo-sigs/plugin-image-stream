@@ -1,6 +1,7 @@
 package run.halo.imagestream.mcp;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -19,6 +20,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 import run.halo.imagestream.client.WebClientFactory;
 import run.halo.mcpserver.api.McpToolDefinition;
+import run.halo.mcpserver.api.McpToolException;
 import run.halo.mcpserver.api.McpToolInvocation;
 
 class ImageStreamMcpToolProviderTest {
@@ -47,7 +49,10 @@ class ImageStreamMcpToolProviderTest {
                 "height": 1600,
                 "alt_description": "A mountain",
                 "urls": {"small": "https://images.unsplash.com/preview", "full": "https://images.unsplash.com/full"},
-                "links": {"html": "https://unsplash.com/photos/unsplash-1"},
+                "links": {
+                  "html": "https://unsplash.com/photos/unsplash-1",
+                  "download_location": "https://api.unsplash.com/photos/unsplash-1/download?ixid=tracking"
+                },
                 "user": {"name": "Alice", "links": {"html": "https://unsplash.com/@alice"}}
               }]
             }
@@ -63,17 +68,20 @@ class ImageStreamMcpToolProviderTest {
             .containsEntry("total", 1L);
         assertThat((List<?>) result.structuredContent().get("items"))
             .singleElement()
-            .isEqualTo(Map.of(
-                "source", "unsplash",
-                "id", "unsplash-1",
-                "alt", "A mountain",
-                "width", 2400,
-                "height", 1600,
-                "previewUrl", "https://images.unsplash.com/preview",
-                "imageUrl", "https://images.unsplash.com/full",
-                "sourceUrl", "https://unsplash.com/photos/unsplash-1",
-                "author", Map.of("name", "Alice", "url", "https://unsplash.com/@alice"),
-                "requiresPreparation", true));
+            .isEqualTo(Map.ofEntries(
+                Map.entry("source", "unsplash"),
+                Map.entry("id", "unsplash-1"),
+                Map.entry("alt", "A mountain"),
+                Map.entry("width", 2400),
+                Map.entry("height", 1600),
+                Map.entry("previewUrl", "https://images.unsplash.com/preview"),
+                Map.entry("imageUrl", "https://images.unsplash.com/full"),
+                Map.entry("downloadLocation",
+                    "https://api.unsplash.com/photos/unsplash-1/download?ixid=tracking"),
+                Map.entry("sourceUrl", "https://unsplash.com/photos/unsplash-1"),
+                Map.entry("author", Map.of(
+                    "name", "Alice", "url", "https://unsplash.com/@alice")),
+                Map.entry("requiresPreparation", true)));
         assertThat(request.get().url().getPath()).isEqualTo("/search/photos");
         assertThat(request.get().url().getQuery())
             .contains("query=mountain", "page=1", "per_page=20");
@@ -114,14 +122,37 @@ class ImageStreamMcpToolProviderTest {
 
         var result = tool(provider, "prepare_unsplash_download").handler()
             .execute(new McpToolInvocation(
-                "prepare_unsplash_download", Map.of("id", "unsplash-1")))
+                "prepare_unsplash_download", Map.of(
+                    "id", "unsplash-1",
+                    "downloadLocation",
+                    "https://api.unsplash.com/photos/unsplash-1/download?ixid=tracking")))
             .block();
 
         assertThat(result.structuredContent()).containsExactlyInAnyOrderEntriesOf(Map.of(
             "source", "unsplash",
             "id", "unsplash-1",
             "url", "https://images.unsplash.com/download"));
-        assertThat(request.get().url().getPath()).isEqualTo("/photos/unsplash-1/download");
+        assertThat(request.get().url().toString())
+            .isEqualTo("https://api.unsplash.com/photos/unsplash-1/download?ixid=tracking");
+    }
+
+    @Test
+    void shouldRejectUnsupportedSizeAndUnsplashDownloadLocation() {
+        var provider = provider("{}");
+
+        assertThatThrownBy(() -> tool(provider, "search_images").handler()
+            .execute(new McpToolInvocation("search_images", Map.of(
+                "source", "pixabay", "query", "nature", "size", 2)))
+            .block())
+            .isInstanceOf(McpToolException.class)
+            .hasMessageContaining("size is outside the supported range");
+        assertThatThrownBy(() -> tool(provider, "prepare_unsplash_download").handler()
+            .execute(new McpToolInvocation("prepare_unsplash_download", Map.of(
+                "id", "unsplash-1",
+                "downloadLocation", "https://example.com/photos/unsplash-1/download")))
+            .block())
+            .isInstanceOf(McpToolException.class)
+            .hasMessageContaining("downloadLocation must match the selected Unsplash photo");
     }
 
     @Test
