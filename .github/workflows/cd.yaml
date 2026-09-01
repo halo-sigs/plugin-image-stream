@@ -65,7 +65,7 @@ jobs:
           name: artifacts
           path: build/libs
       - name: Release to App Store
-        uses: halo-sigs/app-store-release-action@v3
+        uses: halo-sigs/app-store-release-action@v4
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           app-id: "app-JxVVb"
